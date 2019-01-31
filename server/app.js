@@ -5,8 +5,6 @@ const users = require('./routes/users');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
 
 // Data base connection
 mongoose.connect('mongodb://hotsource:fvXs8b46pzx5YpL@hotsource-shard-00-00-fmxxz.mongodb.net:27017,hotsource-shard-00-01-fmxxz.mongodb.net:27017,hotsource-shard-00-02-fmxxz.mongodb.net:27017/test?ssl=true&replicaSet=hotsource-shard-0&authSource=admin&retryWrites=true')
