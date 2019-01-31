@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
-// Data base connection
+// Database connection
 mongoose.connect('mongodb://hotsource:fvXs8b46pzx5YpL@hotsource-shard-00-00-fmxxz.mongodb.net:27017,hotsource-shard-00-01-fmxxz.mongodb.net:27017,hotsource-shard-00-02-fmxxz.mongodb.net:27017/test?ssl=true&replicaSet=hotsource-shard-0&authSource=admin&retryWrites=true')
 .then(() => { app.listen('3000', () => { console.log('SERVER UP')}) })
 .catch((err => { console.log('COULD NOT CONNECT SERVER')}));
@@ -15,21 +15,6 @@ mongoose.connect('mongodb://hotsource:fvXs8b46pzx5YpL@hotsource-shard-00-00-fmxx
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-
-// // initialize session
-// app.use(session({
-//     secret: "ilovehotsource",
-//     resave: false,
-//     saveUninitialized: false,
-//     name: 'user_cook',
-//     cookie: {
-//       httpOnly: false,
-//       maxAge: 10000 * 600 * 5
-//     },
-//     store: new MongoStore({
-//       url: 'mongodb://hotsource:fvXs8b46pzx5YpL@hotsource-shard-00-00-fmxxz.mongodb.net:27017,hotsource-shard-00-01-fmxxz.mongodb.net:27017,hotsource-shard-00-02-fmxxz.mongodb.net:27017/test?ssl=true&replicaSet=hotsource-shard-0&authSource=admin&retryWrites=true'
-//     })
-//   }));
 
 // connect routes
 app.use('/', routes);
