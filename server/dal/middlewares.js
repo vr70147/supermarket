@@ -5,23 +5,41 @@ const Cart = require('../model/cart');
 const User = require('../model/user');
 const Order = require('../model/order');
 
-const getProducts = ((req, res) => {
+// Error Handler
+
+const isDuplicatedProducts = ( res, productName, cb ) => {
+    Product.find({ 'name': productName }).then( result => {
+        if ( result.length > 0 ) {
+            return res.status(500).send({
+                massage: 'this product already exist'
+            });
+        }
+        return cb();
+    });
+}
+
+// End Error Handler
+
+
+const getProducts = ((req, res, next) => {
     Product.find().then( data => {
         res.send(data);
     });
 });
 
-const addProduct = (( req, res ) => {
+const addProduct = (( req, res, next ) => {
     const newProduct = new Product( req.body );
-    newProduct.save().then( data => {
-        res.send(data);
-    })
-    .catch((error) => {
-        res.send(error);
+    isDuplicatedProducts(res, newProduct.name, cb =>{
+        newProduct.save().then( data => {
+            res.send(data);
+        })
+        .catch((error) => {
+            res.send(error);
+        });
     });
 });
 
-const deleteProduct = (( req, res ) => {
+const deleteProduct = (( req, res, next ) => {
     const id = req.params.id;
     Product.findByIdAndDelete({ _id: id })
     .then(() => {
@@ -30,10 +48,9 @@ const deleteProduct = (( req, res ) => {
     .catch((error) => {
         res.send(error);
     })
-
 });
 
-const updateProduct = (( req, res ) => {
+const updateProduct = (( req, res, next ) => {
     const id = req.params.id;
     const update = {
         name: req.body.name,
@@ -49,31 +66,55 @@ const updateProduct = (( req, res ) => {
     })
 });
 
-const createCart = (( req, res ) => {
+const createCart = (( req, res, next ) => {
+    Cart.find({ user: req.decoded.userId }).then((results) => {
+        if( results.length > 0 ) {
+            return res.status(500).send({
+                massage: 'you have an open cart already'
+            });
+        }
+        const newCart = new Cart({ user: req.decoded.userId });
+        newCart.save().then( data => {
+            res.send(data);
+        })
+        .catch((error) => {
+            res.send(error);
+        });  
+    });
+});
+
+const deleteCart = (( req, res, next ) => {
 
 });
 
-const getCart = (( req, res ) => {
+const getCartProducts = (( req, res, next ) => {
 
 });
 
-const deleteCart = (( req, res ) => {
+const addCartProduct = (( req, res, next ) => {
+    const productId = req.body.id;
+    Cart.find({}).then(( cart ) => {
+        if( cart.length === 0) {
+            console.log('no cart exist');
+            // const newCart = new Cart( req.body );
+            // newCart.save().then( data => {
+            //     res.send(data);
+            // })
+            // .catch((error) => {
+            //     res.send(error);
+            // });
+        }
+    })
+    // Product.findById( productId ).then( product => {
+    //     console.log(product);
+    // })
+});
+
+const deleteCartProduct = (( req, res, next ) => {
 
 });
 
-const getCartProducts = (( req, res ) => {
-
-});
-
-const addCartProduct = (( req, res ) => {
-
-});
-
-const deleteCartProduct = (( req, res ) => {
-
-});
-
-const updateCartProduct = (( req, res ) => {
+const updateCartProduct = (( req, res, next ) => {
 
 });
 
@@ -83,7 +124,6 @@ const Middlewares = {
     deleteProduct,
     updateProduct,
     createCart,
-    getCart,
     deleteCart,
     getCartProducts,
     addCartProduct,
