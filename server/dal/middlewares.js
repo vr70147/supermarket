@@ -88,26 +88,23 @@ const deleteCart = (( req, res, next ) => {
 });
 
 const getCartProducts = (( req, res, next ) => {
-
+    Cart.find({}).then(cart => {
+        res.send(cart[0].items);
+    })
 });
 
 const addCartProduct = (( req, res, next ) => {
-    const productId = req.body.id;
-    Cart.find({}).then(( cart ) => {
-        if( cart.length === 0) {
-            console.log('no cart exist');
-            // const newCart = new Cart( req.body );
-            // newCart.save().then( data => {
-            //     res.send(data);
-            // })
-            // .catch((error) => {
-            //     res.send(error);
-            // });
-        }
-    })
-    // Product.findById( productId ).then( product => {
-    //     console.log(product);
-    // })
+    Product.findById({ _id: req.body.id }).then( choosenProduct => {
+        Cart.updateOne( { user: req.decoded.userId }, { $push: { items: choosenProduct } })
+        .then( () => {
+            res.status(200).json({
+                massage: 'item added successfuly'
+            })
+        })
+        .catch(( error ) => {
+            res.send(error);
+        })
+    });
 });
 
 const deleteCartProduct = (( req, res, next ) => {

@@ -24,7 +24,7 @@ router.patch('/products/:id', checkAuth, updateProduct);
 router.put('/cart', checkAuth, createCart);
 router.delete('/cart/:id', checkAuth, deleteCart);
 router.get('/cart/:id/products', checkAuth, getCartProducts);
-router.put('/cart/:id/products', checkAuth, addCartProduct);
+router.patch('/cart/:id/products', checkAuth, addCartProduct);
 router.delete('/cart/:id/products/:id', checkAuth, deleteCartProduct);
 router.patch('/cart/:id/product/:id', checkAuth, updateCartProduct);
 
