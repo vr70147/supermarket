@@ -5,6 +5,7 @@ const Cart = require('../model/cart');
 const User = require('../model/user');
 const Order = require('../model/order');
 
+let cartFlag = false;
 // Error Handler
 
 const isDuplicatedProducts = ( res, productName, cb ) => {
@@ -14,6 +15,19 @@ const isDuplicatedProducts = ( res, productName, cb ) => {
                 massage: 'this product already exist'
             });
         }
+        return cb();
+    });
+}
+
+const isDuplicatedProductsInCart = ( productName, next, cb ) => {
+    Cart.find({}).then( cart => {
+       
+            for ( let i = 0 ; i < cart[0].items.length ; i++ ) {
+                if(cart[0].items[i].name === productName) {
+                cartFlag = true;
+                }
+            }
+        
         return cb();
     });
 }
@@ -88,21 +102,35 @@ const deleteCart = (( req, res, next ) => {
 });
 
 const getCartProducts = (( req, res, next ) => {
-    Cart.find({}).then(cart => {
-        res.send(cart[0].items);
-    })
+   
 });
 
 const addCartProduct = (( req, res, next ) => {
     Product.findById({ _id: req.body.id }).then( choosenProduct => {
-        Cart.updateOne( { user: req.decoded.userId }, { $push: { items: choosenProduct } })
-        .then( () => {
-            res.status(200).json({
-                massage: 'item added successfuly'
-            })
-        })
-        .catch(( error ) => {
-            res.send(error);
+        isDuplicatedProductsInCart( choosenProduct.name, next, cb => {
+            console.log(cartFlag);
+            if( cartFlag ) {
+                Cart.updateOne( { user: req.decoded.userId }, { $inc: { "items.$[].price" : choosenProduct.price } })
+                .then( () => {
+                    return res.status(200).send({
+                        massage: 'item updated successfuly'
+                    });
+                })
+                .catch(( error ) => {
+                    return res.send(error);
+                });
+            }
+            if ( !cartFlag ) {
+                Cart.updateOne( { user: req.decoded.userId }, { $push: { items: choosenProduct } })
+                .then( () => {
+                    return res.status(200).send({
+                        massage: 'item added successfuly'
+                    });
+                })
+                .catch(( error ) => {
+                    return res.send(error);
+                });
+            }
         })
     });
 });
