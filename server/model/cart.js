@@ -4,7 +4,11 @@ const Schema = mongoose.Schema;
 const CartSchema = new Schema({
 	user: { type: String, unique: true },
 	date: { type: Date, default: Date.now },
-	items: []
+	items: [{
+		name: String,
+		image: String,
+		price: Number
+	}]
 });
 
 const Cart = mongoose.model('carts', CartSchema); 

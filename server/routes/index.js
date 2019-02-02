@@ -22,10 +22,10 @@ router.patch('/products/:id', checkAuth, updateProduct);
 
 //Cart routes
 router.put('/cart', checkAuth, createCart);
-router.delete('/cart/:id', checkAuth, deleteCart);
-router.get('/cart/:id/products', checkAuth, getCartProducts);
-router.patch('/cart/:id/products', checkAuth, addCartProduct);
-router.delete('/cart/:id/products/:id', checkAuth, deleteCartProduct);
-router.patch('/cart/:id/product/:id', checkAuth, updateCartProduct);
+router.delete('/cart', checkAuth, deleteCart);
+router.get('/cart/products', checkAuth, getCartProducts);
+router.patch('/cart/products', checkAuth, addCartProduct);
+router.delete('/cart/products/:id', checkAuth, deleteCartProduct);
+router.patch('/cart/product/:id', checkAuth, updateCartProduct);
 
 module.exports = router;
