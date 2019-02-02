@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const OrderSchema = new Schema({
-	user: { type: Schema.Types.ObjectId, ref: 'users'},
-	cart: { type: Schema.Types.ObjectId, ref: 'carts' },
+	cart: String,
 	price: Number,
 	city: String,
 	street: String,

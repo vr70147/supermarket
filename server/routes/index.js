@@ -24,8 +24,8 @@ router.patch('/products/:id', checkAuth, updateProduct);
 router.put('/cart', checkAuth, createCart);
 router.delete('/cart', checkAuth, deleteCart);
 router.get('/cart/products', checkAuth, getCartProducts);
-router.patch('/cart/products', checkAuth, addCartProduct);
+router.put('/cart/products', checkAuth, addCartProduct);
 router.delete('/cart/products/:id', checkAuth, deleteCartProduct);
-router.patch('/cart/product/:id', checkAuth, updateCartProduct);
+router.patch('/cart/products', checkAuth, updateCartProduct);
 
 module.exports = router;

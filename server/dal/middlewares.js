@@ -1,8 +1,6 @@
 const Product = require('../model/product');
 const Category = require('../model/category');
-const CartItem = require('../model/product-from-cart');
 const Cart = require('../model/cart');
-const User = require('../model/user');
 const Order = require('../model/order');
 
 let cartFlag = false;
@@ -32,6 +30,19 @@ const isDuplicatedProductsInCart = ( req, product, cb ) => {
         
         return cb();
     });
+}
+const updateCartProductPrice = ( req, res, choosenProduct, qty ) => {
+    Cart.updateOne({ user: req.decoded.userId },
+        { $inc: { 'items.$[t].price': choosenProduct.price * qty } },
+        { arrayFilters: [ { 't.name': choosenProduct.name } ]})
+        .then( () => {
+            return res.status(200).send({
+                massage: 'המוצר עודכן בהצלחה'
+            });
+        })
+        .catch(( error ) => {
+            return res.send(error);
+        });
 }
 
 // End Error Handler
@@ -122,18 +133,7 @@ const addCartProduct = (( req, res, next ) => {
     Product.findById({ _id: id }).then( choosenProduct => {
         isDuplicatedProductsInCart( req, choosenProduct, cb => {
             if( cartFlag ) {
-                Cart.updateOne({ user: req.decoded.userId },
-                { $inc: { 'items.$[t].price': choosenProduct.price * qty } },
-                { arrayFilters: [ { 't.name': choosenProduct.name } ]})
-                .then( () => {
-                    return res.status(200).send({
-                        massage: 'המוצר עודכן בהצלחה'
-                    });
-                })
-                .catch(( error ) => {
-                    console.log('error')
-                    return res.send(error);
-                });
+                updateCartProductPrice( req, res, choosenProduct, qty );
             }
             if ( !cartFlag ) {
                 const selectedProduct = {
@@ -157,11 +157,25 @@ const addCartProduct = (( req, res, next ) => {
 });
 
 const deleteCartProduct = (( req, res, next ) => {
-
+    Cart.update({ user: req.decoded.userId }, { "$pull": { "items": { "_id": req.params.id } }}, { safe: true, multi:true })
+    .then(() => {
+        res.status(200).send({
+            massage: 'הפריט הוסר בהצלחה'
+        });
+    })
+    .catch( error => {
+        res.status(500).send({
+            massage: error
+        });
+    });
 });
 
 const updateCartProduct = (( req, res, next ) => {
-
+    const id = req.body.id;
+    const qty = req.body.qty;
+    Product.findById({ _id: id }).then( choosenProduct => {
+        updateCartProductPrice( req, res, choosenProduct, qty );
+    });
 });
 
 const Middlewares = {
