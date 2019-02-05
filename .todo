@@ -1,0 +1,7 @@
+Middlewares:
+    nodejs:
+        - to add order form
+        - to add categories @done
+        - to create function that avoid from wrong product id get in to the cart
+        - to create upload image
+        - to create function that avoid from duplicated categories

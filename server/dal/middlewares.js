@@ -1,3 +1,5 @@
+
+const mongoose = require('mongoose');
 const Product = require('../model/product');
 const Category = require('../model/category');
 const Cart = require('../model/cart');
@@ -6,6 +8,7 @@ const Order = require('../model/order');
 let cartFlag = false;
 // Error Handler
 
+// Check if product exist
 const isDuplicatedProducts = ( res, productName, cb ) => {
     Product.find({ 'name': productName }).then( result => {
         if ( result.length > 0 ) {
@@ -17,24 +20,41 @@ const isDuplicatedProducts = ( res, productName, cb ) => {
     });
 }
 
-const isDuplicatedProductsInCart = ( req, product, cb ) => {
+// Check if product exist in cart
+const isDuplicatedItemInCart = ( req, product, cb ) => {
     
     Cart.findOne({ user: req.decoded.userId }).then( cart => {
             for ( let i = 0 ; i < cart.items.length ; i++ ) {
                 if(cart.items[i].name === product.name) {
-                cart.items[i].name
-                cartFlag = true;
-                console.log(cartFlag);
+                    cart.items[i].name
+                    cartFlag = true;
                 }
             }
-        
         return cb();
     });
 }
-const updateCartProductPrice = ( req, res, choosenProduct, qty ) => {
+
+// Check if category exist
+const isDuplicatedCategories = ( req, res, category, cb ) => {
+    Category.findOne({ name: category }).then(( category ) => {
+        if ( category ) {
+            return res.status(500).send({
+                massage: 'הקטגוריה שבחרת כבר קיימת'
+            });
+        }
+        return cb();
+    })
+    .catch( err => {
+        res.status(500).send({
+            error: err
+        });
+    });
+}
+// Update the price of the modified item
+const updateCartItemPrice = ( req, res, choosenItem, qty ) => {
     Cart.updateOne({ user: req.decoded.userId },
-        { $inc: { 'items.$[t].price': choosenProduct.price * qty } },
-        { arrayFilters: [ { 't.name': choosenProduct.name } ]})
+        { $inc: { 'items.$[t].qty': qty } },
+        { arrayFilters: [ { 't.name': choosenItem.name } ]})
         .then( () => {
             return res.status(200).send({
                 massage: 'המוצר עודכן בהצלחה'
@@ -47,11 +67,33 @@ const updateCartProductPrice = ( req, res, choosenProduct, qty ) => {
 
 // End Error Handler
 
+const getCategories = (( req, res, next ) => {
+    Category.find({}).then( categories => {
+        res.status(200).send(categories);
+    })
+	.catch( error => {
+        res.status(500).send(error);
+    })
+});
+
+const addCategory = (( req, res, next ) => {
+    const newCategory = new Category( req. body );
+    isDuplicatedCategories( req, res, newCategory.name, () => {
+        newCategory.save().then(( data ) => {
+            res.send(data)
+        }).catch( err => {
+            res.status(500).send({
+                error: err
+            })
+        })
+    });
+});
 
 const getProducts = ((req, res, next) => {
-    Product.find().then( data => {
-        res.send(data);
-    });
+    Product.find({}).populate('category', 'name').exec( ( err, category ) => {
+		if (err){ return console.log(err)};
+		res.status(200).json(category);
+	}) 
 });
 
 const addProduct = (( req, res, next ) => {
@@ -119,7 +161,7 @@ const deleteCart = (( req, res, next ) => {
 
 });
 
-const getCartProducts = (( req, res, next ) => {
+const getCartItems = (( req, res, next ) => {
     Cart.find({ user: req.decoded.userId }).then( cart => {
         res.status(200).send({
             items: cart[0].items
@@ -127,22 +169,23 @@ const getCartProducts = (( req, res, next ) => {
     })
 });
 
-const addCartProduct = (( req, res, next ) => {
+const addCartItem = (( req, res, next ) => {
     const id = req.body.id;
     const qty = req.body.qty;
-    Product.findById({ _id: id }).then( choosenProduct => {
-        isDuplicatedProductsInCart( req, choosenProduct, cb => {
+    Product.findById({ _id: id }).then( choosenItem => {
+        isDuplicatedItemInCart( req, choosenItem, cb => {
             if( cartFlag ) {
-                updateCartProductPrice( req, res, choosenProduct, qty );
+                updateCartItemPrice( req, res, choosenItem, qty );
             }
             if ( !cartFlag ) {
-                const selectedProduct = {
-                    _id: choosenProduct._id,
-                    name: choosenProduct.name,
-                    image: choosenProduct.image,
-                    price: choosenProduct.price * req.body.qty
+                const selectedItem = {
+                    _id: choosenItem._id,
+                    name: choosenItem.name,
+                    image: choosenItem.image,
+                    qty: qty,
+                    price: choosenItem.price
                 }
-                Cart.updateOne( { user: req.decoded.userId }, { $push: { items: selectedProduct } })
+                Cart.updateOne( { user: req.decoded.userId }, { $push: { items: selectedItem } })
                 .then( () => {
                     return res.status(200).send({
                         massage: 'המוצר הוסף בהצלחה אל עגלת הקניות'
@@ -156,8 +199,8 @@ const addCartProduct = (( req, res, next ) => {
     });
 });
 
-const deleteCartProduct = (( req, res, next ) => {
-    Cart.update({ user: req.decoded.userId }, { "$pull": { "items": { "_id": req.params.id } }}, { safe: true, multi:true })
+const deleteCartItem = (( req, res, next ) => {
+    Cart.updateOne({ user: req.decoded.userId }, { "$pull": { "items": { "_id": req.params.id } }}, { safe: true, multi:true })
     .then(() => {
         res.status(200).send({
             massage: 'הפריט הוסר בהצלחה'
@@ -170,25 +213,32 @@ const deleteCartProduct = (( req, res, next ) => {
     });
 });
 
-const updateCartProduct = (( req, res, next ) => {
+const updateCartItem = (( req, res, next ) => {
     const id = req.body.id;
     const qty = req.body.qty;
     Product.findById({ _id: id }).then( choosenProduct => {
-        updateCartProductPrice( req, res, choosenProduct, qty );
+        updateCartItemPrice( req, res, choosenProduct, qty );
     });
 });
 
+const sendOrder = (( req, res, next ) => {
+
+});
+
 const Middlewares = {
+    addCategory,
+    getCategories,
     addProduct,
     getProducts,
     deleteProduct,
     updateProduct,
     createCart,
     deleteCart,
-    getCartProducts,
-    addCartProduct,
-    deleteCartProduct,
-    updateCartProduct
+    getCartItems,
+    addCartItem,
+    deleteCartItem,
+    updateCartItem,
+    sendOrder
 };
 
 module.exports = Middlewares;
