@@ -143,11 +143,16 @@ const createCart = (( req, res, next ) => {
             });
         }
         const newCart = new Cart({ user: req.decoded.userId });
-        newCart.save().then( data => {
-            res.send(data);
+        newCart.save().then( cart => {
+            res.status(200).send({
+                id: cart._id,
+                items: cart.items,
+                user: cart.user,
+                date: cart.date.toString().split(" ")
+            });
         })
-        .catch((error) => {
-            res.send(error);
+        .catch(err => {
+            res.status(500).send(err);
         });  
     });
 });
