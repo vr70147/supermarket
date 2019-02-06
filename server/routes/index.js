@@ -2,6 +2,35 @@ const express = require('express');
 const router = express.Router();
 const Middlewares = require('../dal/middlewares');
 const checkAuth = require('../check-auth');
+const upload = require('../upload-image/upload');
+
+//upload image start
+
+const multer = require('multer');
+
+const MIME_TYPE_MAP = {
+    'image/png': 'png',
+    'image/jpeg': 'jpg',
+    'image/jpg': 'jpg'
+};
+
+const storage = multer.diskStorage({
+    destination: ( req, file, cb ) => {
+        const isValid = MIME_TYPE_MAP[file.mimetype];
+        let error = new Error('Invalid mime type');
+        if(isValid) {
+            error = null;
+        }
+        cb( error, 'images');
+    },
+    filename: (req, file, cb ) => {
+        const name = file.originalname.toLowerCase().split( ' ' ).join( '-' );
+        const ext = MIME_TYPE_MAP[file.mimetype];
+        cb( null, name + '-' + Date.now() + '.' + ext);
+    }
+});
+
+//end upload image
 
 const getCategories = Middlewares.getCategories;
 const addCategory = Middlewares.addCategory;
@@ -23,7 +52,7 @@ router.put('/categories', checkAuth, addCategory);
 
 // Products routes
 router.get('/products', checkAuth, getProducts);
-router.put('/products', checkAuth, addProduct);
+router.put('/products', multer({ storage: storage }).single('image'), checkAuth, addProduct);
 router.delete('/products/:id', checkAuth, deleteProduct);
 router.patch('/products/:id', checkAuth, updateProduct);
 

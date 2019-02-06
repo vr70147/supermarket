@@ -4,6 +4,10 @@ const Product = require('../model/product');
 const Category = require('../model/category');
 const Cart = require('../model/cart');
 const Order = require('../model/order');
+const multer = require('multer');
+
+
+
 
 let cartFlag = false;
 // Error Handler
@@ -97,10 +101,23 @@ const getProducts = ((req, res, next) => {
 });
 
 const addProduct = (( req, res, next ) => {
-    const newProduct = new Product( req.body );
+    const url = req.protocol + '://' + req.get('host');
+    const newProduct = new Product({
+        name: req.body.name,
+        image: url + '/images/' + req.file.filename,
+        price: req.body.price
+    });
     isDuplicatedProducts(res, newProduct.name, cb =>{
-        newProduct.save().then( data => {
-            res.send(data);
+        newProduct.save().then( createdProduct => {
+            res.status(201).json({
+                massage: 'המוצר נוצר בהצלחה',
+                product: {
+                    id: createdProduct._id,
+                    name: createdProduct.name,
+                    image: createdProduct.image,
+                    price: createdProduct.price
+                }
+            });
         })
         .catch((error) => {
             res.send(error);
@@ -178,6 +195,11 @@ const addCartItem = (( req, res, next ) => {
     const id = req.body.id;
     const qty = req.body.qty;
     Product.findById({ _id: id }).then( choosenItem => {
+        if( choosenItem === null ) {
+            return res.status(500).send({
+                error: 'this id is wrong'
+            })
+        }
         isDuplicatedItemInCart( req, choosenItem, cb => {
             if( cartFlag ) {
                 updateCartItemPrice( req, res, choosenItem, qty );
@@ -198,6 +220,10 @@ const addCartItem = (( req, res, next ) => {
                 })
                 .catch(( error ) => {
                     return res.send(error);
+                }).catch((err) => {
+                    res.status(500).send({
+                        error: err,
+                    })
                 });
             }
         })
