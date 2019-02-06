@@ -8,7 +8,9 @@ const cookieParser = require('cookie-parser');
 
 
 // Database connection
-mongoose.connect('mongodb://hotsource:fvXs8b46pzx5YpL@hotsource-shard-00-00-fmxxz.mongodb.net:27017,hotsource-shard-00-01-fmxxz.mongodb.net:27017,hotsource-shard-00-02-fmxxz.mongodb.net:27017/test?ssl=true&replicaSet=hotsource-shard-0&authSource=admin&retryWrites=true')
+mongoose.set('useCreateIndex', true);
+mongoose.connect('mongodb://hotsource:fvXs8b46pzx5YpL@hotsource-shard-00-00-fmxxz.mongodb.net:27017,hotsource-shard-00-01-fmxxz.mongodb.net:27017,hotsource-shard-00-02-fmxxz.mongodb.net:27017/test?ssl=true&replicaSet=hotsource-shard-0&authSource=admin&retryWrites=true'
+, { useNewUrlParser: true })
 .then(() => { app.listen('3000', () => { console.log('SERVER UP')}) })
 .catch((err => { console.log('COULD NOT CONNECT SERVER')}));
 
