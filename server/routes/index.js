@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Middlewares = require('../dal/middlewares');
 const checkAuth = require('../check-auth');
-const upload = require('../upload-image/upload');
 
 //upload image start
 
@@ -65,6 +64,6 @@ router.delete('/cart/products/:id', checkAuth, deleteCartItem);
 router.patch('/cart/products', checkAuth, updateCartItem);
 
 //checkout
-router.post('/order', checkAuth, sendOrder);
+router.put('/order', checkAuth, sendOrder);
 
 module.exports = router;
