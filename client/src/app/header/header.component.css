@@ -1,0 +1,20 @@
+.logo {
+  width: 18vw;
+  height: 10vh;
+  display: inline-flex;
+  align-items: center;
+  margin-right: 2vw;
+}
+.logo img {
+  width: 100%;
+  height: auto;
+}
+.user {
+  width: 18vw;
+  height: 10vh;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: 2vw;
+}
+

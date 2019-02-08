@@ -1,0 +1,9 @@
+app-header {
+  background-color:white;
+  border-bottom: 3px solid chocolate;
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 10vh;
+  justify-content: space-between;
+}

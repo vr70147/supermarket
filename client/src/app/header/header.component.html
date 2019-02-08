@@ -1,0 +1,11 @@
+<div class="logo">
+  <img src="../../assets/images/super-logo.png">
+</div>
+<div class="user">
+  <div class="guest" *ngIf="!user">
+    <p>שלום אורח</p>
+  </div>
+  <div class="loggedIn" *ngIf="user">
+    <p>שלום רענן אדוט</p>
+  </div>
+</div>
