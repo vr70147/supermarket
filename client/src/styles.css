@@ -8,3 +8,6 @@ html, body {
 body { margin: 0;
   font-family: 'Assistant', sans-serif;
 }
+button {
+  font-family: 'Assistant', sans-serif;
+}

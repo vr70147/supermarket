@@ -15,6 +15,19 @@
   display: inline-flex;
   align-items: center;
   justify-content: flex-end;
+  flex-direction: row;
+  flex-wrap: wrap;
   margin-left: 2vw;
+}
+.user div {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.user div p + button {
+  display: inline-block;
+  margin-right: 0.5vw;
+  font-family: 'Assistant', sans-serif;
 }
 
