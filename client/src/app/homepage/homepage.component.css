@@ -1,0 +1,13 @@
+app-login, app-notifications, app-advertise {
+  width: calc(100vw / 3);
+  margin-top: 1vw;
+  height: 80vh;
+  border: 1px solid rgb(214, 214, 214);
+  border-radius: 5px;
+}
+app-login {
+  margin-left: 1vw;
+}
+app-notifications {
+  margin-right: 1vw
+}

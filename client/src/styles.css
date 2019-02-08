@@ -5,9 +5,8 @@ html, body {
   direction: rtl;
 
 }
-body { margin: 0;
+body {
+  margin: 0;
   font-family: 'Assistant', sans-serif;
 }
-button {
-  font-family: 'Assistant', sans-serif;
-}
+

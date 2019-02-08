@@ -17,6 +17,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule,
          MatIconModule,
          MatButtonModule } from '@angular/material';
+import { HomepageComponent } from './homepage/homepage.component';
+import { ShoppingPageComponent } from './shopping-page/shopping-page.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { MatToolbarModule,
     CartComponent,
     ProductsComponent,
     CategoriesComponent,
-    CreateProductComponent
+    CreateProductComponent,
+    HomepageComponent,
+    ShoppingPageComponent,
   ],
   imports: [
     BrowserModule,
