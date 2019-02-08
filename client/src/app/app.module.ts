@@ -16,6 +16,7 @@ import { CreateProductComponent } from './create-product/create-product.componen
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule,
          MatIconModule,
+         MatInputModule,
          MatButtonModule } from '@angular/material';
 import { HomepageComponent } from './homepage/homepage.component';
 import { ShoppingPageComponent } from './shopping-page/shopping-page.component';
@@ -42,7 +43,8 @@ import { ShoppingPageComponent } from './shopping-page/shopping-page.component';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatInputModule
   ],
   providers: [],
   bootstrap: [AppComponent]
