@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const Middlewares = require('../dal/middlewares');
+const CartController = require('../controllers/carts');
+const ProductsController = require('../controllers/products');
+const CheckOutController = require('../controllers/checkout');
+const CategoriesController = require('../controllers/categories');
 const checkAuth = require('../check-auth');
 
 //upload image start
@@ -16,6 +19,7 @@ const MIME_TYPE_MAP = {
 const storage = multer.diskStorage({
     destination: ( req, file, cb ) => {
         const isValid = MIME_TYPE_MAP[file.mimetype];
+        console.log(file)
         let error = new Error('Invalid mime type');
         if(isValid) {
             error = null;
@@ -31,19 +35,19 @@ const storage = multer.diskStorage({
 
 //end upload image
 
-const getCategories = Middlewares.getCategories;
-const addCategory = Middlewares.addCategory;
-const getProducts = Middlewares.getProducts;
-const addProduct = Middlewares.addProduct;
-const deleteProduct = Middlewares.deleteProduct;
-const updateProduct = Middlewares.updateProduct;
-const createCart = Middlewares.createCart;
-const deleteCart = Middlewares.deleteCart;
-const getCartItems = Middlewares.getCartItems;
-const addCartItem = Middlewares.addCartItem;
-const deleteCartItem = Middlewares.deleteCartItem;
-const updateCartItem = Middlewares.updateCartItem;
-const sendOrder = Middlewares.sendOrder;
+const getCategories = CategoriesController.getCategories;
+const addCategory = CategoriesController.addCategory;
+const getProducts = ProductsController.getProducts;
+const addProduct = ProductsController.addProduct;
+const deleteProduct = ProductsController.deleteProduct;
+const updateProduct = ProductsController.updateProduct;
+const createCart = CartController.createCart;
+const deleteCart = CartController.deleteCart;
+const getCartItems = CartController.getCartItems;
+const addCartItem = CartController.addCartItem;
+const deleteCartItem = CartController.deleteCartItem;
+const updateCartItem = CartController.updateCartItem;
+const sendOrder = CheckOutController.sendOrder;
 
 //Categories routs
 router.get('/categories', checkAuth, getCategories);

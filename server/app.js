@@ -10,15 +10,15 @@ const async = require('async');
 
 // Database connection
 mongoose.set('useCreateIndex', true);
-mongoose.connect('mongodb+srv://hotsource:' + process.env.MONGO_ATLAS_PW + '@hotsource-fmxxz.mongodb.net/test?retryWrites=true'
+mongoose.connect('mongodb+srv://hotsource:fvXs8b46pzx5YpL@hotsource-fmxxz.mongodb.net/test?retryWrites=true'
 , { useNewUrlParser: true })
 .then(() => { console.log('SERVER UP')})
-.catch(() => { console.log('COULD NOT CONNECT SERVER')});
+.catch((e) => { console.log(e)});
 
 // initialize middlewares
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use("/images", express.static(path.join("./images")));
+app.use("/images", express.static(path.join("../server/images")));
 app.use(cookieParser());
 
 // initialize CORS
