@@ -1,0 +1,19 @@
+img {
+  margin-top: 2vh;
+  width: 80%;
+  align-self: flex-end;
+}
+.text {
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 4vh;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+}
+h1 {
+  line-height: 6vh;
+}
+
