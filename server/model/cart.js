@@ -3,13 +3,13 @@ const Schema = mongoose.Schema;
 const Product = require('../model/product');
 
 const CartSchema = new Schema({
-	user: { type: String, unique: true },
+	user: { type: String, unique: true, require: true },
 	date: { type: Date, default: Date.now },
 	items: [{
 		name: { type:String, unique: true, require: true },
-		image: { type:String, unique: true },
-		price: { type: Number, require: true },
-		qty: { type: Number, require: true }
+		image: { type:String, unique: true, require: true },
+		price: { type: Number, require: true, require: true },
+		qty: { type: Number, require: true, require: true }
 	}]
 });
 

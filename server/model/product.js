@@ -21,7 +21,6 @@ module.exports.createProduct = async (newProduct) => {
 module.exports.deleteProduct = async id  => {
 	try {
 		const deleteP = await Product.findByIdAndDelete({ _id: id });
-		console.log(deleteP);
 		if (deleteP) return true
 		return false;
 	} catch (error) {
