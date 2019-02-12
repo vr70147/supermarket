@@ -46,7 +46,6 @@ const deleteCart = CartController.deleteCart;
 const getCartItems = CartController.getCartItems;
 const addCartItem = CartController.addCartItem;
 const deleteCartItem = CartController.deleteCartItem;
-const updateCartItem = CartController.updateCartItem;
 const sendOrder = CheckOutController.sendOrder;
 
 //Categories routs
@@ -65,7 +64,6 @@ router.delete('/cart', checkAuth, deleteCart);
 router.get('/cart/products', checkAuth, getCartItems);
 router.put('/cart/products', checkAuth, addCartItem);
 router.delete('/cart/products/:id', checkAuth, deleteCartItem);
-router.patch('/cart/products', checkAuth, updateCartItem);
 
 //checkout
 router.put('/order', checkAuth, sendOrder);

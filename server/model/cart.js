@@ -47,3 +47,40 @@ module.exports.addItemtoCart = async (req, res, id, qty) => {
 		return false;
 	}
 }
+module.exports.deleteItemFromCart = async req => {
+	try {
+		const deleteItem = await Cart.updateOne({ user: req.decoded.userId },
+			{ "$pull": { "items": { "_id": req.params.id } }},
+			{ safe: true, multi:true });
+		if( deleteItem.nModified === 1) return true
+		return false;
+	}
+	catch(error) {
+		return false;
+	}
+}
+module.exports.createCart = async req => {
+	try {
+		const createNewCart = await Cart.find({ user: req.decoded.userId });
+        if( createNewCart ) {
+            return res.status(500).send({
+                massage: 'קיימת כבר עגלה פתוחה'
+            });
+        }
+        
+		const newCartCreated = await newCart.save();
+		if (newCartCreated ) {
+			return cart = {
+				id: newCartCreated._id,
+                items: newCartCreated.items,
+                user: newCartCreated.user,
+                date: newCartCreated.date.toString().split(" ")
+			}
+		}
+		return false;
+	}
+	catch (error) {
+		return false;
+	}
+	
+}
