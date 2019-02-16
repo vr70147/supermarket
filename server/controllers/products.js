@@ -1,10 +1,18 @@
 const Product = require('../model/product');
 
-const getProducts = ((req, res, next) => {
-    Product.find({}).populate('category', 'name').exec( ( err, category ) => {
-		if (err){ return console.log(err)};
-		res.status(200).json(category);
-	}) 
+const getProducts = ( async (req, res, next) => {
+    try {
+        const gotAllProducts = await Product.find({}).populate('category', 'name');
+        
+        if ( gotAllProducts ) {
+            return res.status(200).json({
+                products: gotAllProducts,
+            });
+        }
+    }
+    catch (error) {
+        return res.status(500).send( error );
+    }
 });
 
 const addProduct = ( async ( req, res, next ) => {

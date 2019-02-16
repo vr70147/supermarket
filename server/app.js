@@ -18,7 +18,7 @@ mongoose.connect('mongodb+srv://hotsource:fvXs8b46pzx5YpL@hotsource-fmxxz.mongod
 // initialize middlewares
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use("/images", express.static(path.join("../server/images")));
+app.use("/images", express.static(path.join("./images")));
 app.use(cookieParser());
 
 // initialize CORS

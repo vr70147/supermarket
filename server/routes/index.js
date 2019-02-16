@@ -53,7 +53,7 @@ router.get('/categories', checkAuth, getCategories);
 router.put('/categories', checkAuth, addCategory);
 
 // Products routes
-router.get('/products', checkAuth, getProducts);
+router.get('/products', getProducts);
 router.put('/products', multer({ storage: storage }).single('image'), checkAuth, addProduct);
 router.delete('/products/:id', checkAuth, deleteProduct);
 router.patch('/products/:id', checkAuth, updateProduct);

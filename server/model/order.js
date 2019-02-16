@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 
 const OrderSchema = new Schema({
 	cart: String,
-	price: Number,
+	total: Number,
 	city: String,
 	street: String,
 	dateOfDelivery: { type: Date, timeStamp: true },

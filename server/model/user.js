@@ -9,7 +9,6 @@ const UserSchema = new Schema({
 	street: { type: String },
 	fname: { type: String, require: true },
 	lname: { type: String, require: true },
-	cart: { type: Schema.Types.ObjectId, ref: 'carts'},
 	role: String
 });
 

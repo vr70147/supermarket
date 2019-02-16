@@ -10,9 +10,9 @@ app-login {
   margin-left: 1vw;
 }
 app-notifications {
-  margin-right: 1vw
+  margin-right: 1vw;
 }
-app-advertise {
+app-advertise, app-notifications {
   display: flex;
   flex-direction: column;
   align-items: center;
