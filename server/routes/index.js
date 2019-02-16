@@ -41,6 +41,7 @@ const getProducts = ProductsController.getProducts;
 const addProduct = ProductsController.addProduct;
 const deleteProduct = ProductsController.deleteProduct;
 const updateProduct = ProductsController.updateProduct;
+const getCart = CartController.getCart;
 const createCart = CartController.createCart;
 const deleteCart = CartController.deleteCart;
 const getCartItems = CartController.getCartItems;
@@ -59,6 +60,7 @@ router.delete('/products/:id', checkAuth, deleteProduct);
 router.patch('/products/:id', checkAuth, updateProduct);
 
 //Cart routes
+router.get('/cart', checkAuth, getCart);
 router.put('/cart', checkAuth, createCart);
 router.delete('/cart', checkAuth, deleteCart);
 router.get('/cart/products', checkAuth, getCartItems);

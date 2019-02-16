@@ -28,3 +28,21 @@ h4 {
 p {
   font-size: 1.1vw;
 }
+app-header {
+  background-color:white;
+  border-bottom: 3px solid lightseagreen ;
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  height: 10vh;
+  justify-content: space-between;
+}
+
+app-homepage {
+  display: flex;
+  flex-direction: row;
+  width: 96vw;
+  height: 80vh;
+  justify-content: space-around;
+  margin: 0 auto;
+}

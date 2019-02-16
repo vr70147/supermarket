@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { AuthService } from '../service/auth.service';
+import { CartService } from '../service/cart.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -7,9 +10,10 @@ import { NgForm } from '@angular/forms';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-
-  data: object = {};
-  constructor() { }
+  userIsAuthenticated = false;
+  private authListenerSub: Subscription;
+  private cartOpenListenerSub: Subscription;
+  constructor( private authService: AuthService, private cartService: CartService ) { }
 
   ngOnInit() {
   }
@@ -17,12 +21,13 @@ export class LoginComponent implements OnInit {
     if ( loginForm.invalid ) {
       return;
     }
-    this.data = {
-      user: loginForm.value.email,
-      pass: loginForm.value.password
-    };
+    this.authService.login( loginForm.value.email, loginForm.value.password );
+    this.authListenerSub = this.authService.getAuthStatusListener().subscribe(
+      (isAuthenticated => {
+        this.userIsAuthenticated = isAuthenticated;
+      }));
     loginForm.reset();
-    console.log(this.data);
+
   }
 
 }

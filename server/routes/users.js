@@ -9,13 +9,25 @@ router.post('/signup', ( req, res, next ) => {
     .then( hash => {
         const user = new User({
             email: req.body.email,
-            password: hash
+            password: hash,
+            city: req.body.city,
+            street: req.body.street,
+            fname: req.body.fname,
+            lname: req.body.lname,
+            role: req.body.role
         });
         user.save()
         .then( result => {
             res.status(201).json({
-                massage: 'User created!',
-                result: result
+                massage: 'נרשמת בהצלחה!',
+                result: {
+                    email: result.email,
+                    city: result.city,
+                    street: result.street,
+                    fname: result.fname,
+                    lname: result.lname,
+                    role: result.role
+                }
             });
         })
         .catch( err => {

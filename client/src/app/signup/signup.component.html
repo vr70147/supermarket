@@ -1,3 +1,31 @@
-<p>
-  signup works!
-</p>
+<form (submit)="onSubmitForm(signupForm)" #signupForm="ngForm">
+  <div class="title">
+      <h3>טופס הרשמה</h3>
+      <h4>נא מלאו פרטים כדי להירשם</h4>
+  </div>
+  <mat-form-field>
+    <input type="text" matInput placeholder="שם משתמש" ngModel name="email" required #email="ngModel">
+    <mat-error *ngIf="email.invalid">שדה חובה</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="password" matInput placeholder="סיסמא" ngModel name="password" required #pass="ngModel">
+    <mat-error *ngIf="pass.invalid">שדה חובה</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="text" matInput placeholder="עיר" ngModel name="city" required #city="ngModel">
+    <mat-error *ngIf="city.invalid">שדה חובה</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="type" matInput placeholder="רחוב" ngModel name="street" required #street="ngModel">
+    <mat-error *ngIf="street.invalid">שדה חובה</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="type" matInput placeholder="שם פרטי" ngModel name="fname" required #fname="ngModel">
+    <mat-error *ngIf="fname.invalid">שדה חובה</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input type="type" matInput placeholder="שם משפחה" ngModel name="lname" required #lname="ngModel">
+    <mat-error *ngIf="lname.invalid">שדה חובה</mat-error>
+  </mat-form-field>
+    <button type="submit" mat-raised-button color="primary">הירשמו</button>
+</form>

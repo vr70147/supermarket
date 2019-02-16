@@ -1,6 +1,15 @@
 
 const Cart = require('../model/cart');
 
+const getCart = ( req, res, next ) => {
+    Cart.find({}).then( cart => {
+        res.status(200).send(cart);
+    })
+	.catch( error => {
+        res.status(500).send(error);
+    })
+}
+
 const createCart = ( async ( req, res, next ) => {
     const newCart = new Cart({ user: req.decoded.userId });
     const createdCart = await Cart.createCart(req, newCart);
@@ -57,6 +66,7 @@ const deleteCartItem = ( async ( req, res, next ) => {
 });
 
 const CartController = {
+    getCart,
     createCart,
     deleteCart,
     getCartItems,

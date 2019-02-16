@@ -1,4 +1,4 @@
-<form (submit)="onSubmitForm(loginForm)" #loginForm="ngForm">
+<form (submit)="onSubmitForm(loginForm)" #loginForm="ngForm" *ngIf="!userIsAuthenticated">
   <div class="title">
       <h3>כניסה למערכת</h3>
       <h4>נא מלאו פרטים כדי להמשיך</h4>
@@ -12,5 +12,9 @@
     <mat-error *ngIf="pass.invalid">שדה חובה</mat-error>
   </mat-form-field>
     <button type="submit" mat-raised-button color="primary">היכנסו</button>
-    <p>עדיין לא נרשמת? <a href="#">הירשם</a></p>
+    <p>עדיין לא נרשמת? <a routerLink="/signup" routeLinkActive="mat-accent">הירשם</a></p>
 </form>
+<div class="goToshopping" *ngIf="userIsAuthenticated">
+  <button>התחל קניה</button>
+  <button>המשך קניה</button>
+</div>
