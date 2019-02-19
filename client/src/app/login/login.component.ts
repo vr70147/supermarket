@@ -12,11 +12,13 @@ import { Subscription } from 'rxjs';
 export class LoginComponent implements OnInit {
   userIsAuthenticated = false;
   private authListenerSub: Subscription;
-  private cartOpenListenerSub: Subscription;
+  private cartListenerSub: Subscription;
+  isCartOpen = false;
   isLoading = false;
   constructor( private authService: AuthService, private cartService: CartService ) { }
 
   ngOnInit() {
+    this.isLoading = false;
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListenerSub = this.authService.getAuthStatusListener().subscribe(
       ( isAuthenticated => {
@@ -31,10 +33,15 @@ export class LoginComponent implements OnInit {
     this.authService.login( loginForm.value.email, loginForm.value.password );
     this.authListenerSub = this.authService.getAuthStatusListener().subscribe(
       (isAuthenticated => {
+        this.cartService.isCartOpenIndicator();
         this.userIsAuthenticated = isAuthenticated;
       }));
+    this.cartListenerSub = this.cartService.getCartStatusListener().subscribe(
+      ( response: boolean ) => {
+        this.isCartOpen = response;
+      }
+    );
     loginForm.reset();
 
   }
-
 }

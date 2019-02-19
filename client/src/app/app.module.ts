@@ -23,6 +23,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { ShoppingPageComponent } from './shopping-page/shopping-page.component';
 import { AdminComponent } from './admin/admin.component';
 import { AuthInterceptor } from './auth-interceptor';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { AuthInterceptor } from './auth-interceptor';
     HomepageComponent,
     ShoppingPageComponent,
     AdminComponent,
+    CheckoutComponent,
   ],
   imports: [
     BrowserModule,

@@ -43,7 +43,6 @@ export class AuthService {
       if ( token ) {
         this.isAuthenticated = true;
         this.authStatusListener.next(true);
-
       }
 
     });

@@ -1,14 +1,13 @@
 
 const Cart = require('../model/cart');
 
-const getCart = ( req, res, next ) => {
-    Cart.find({}).then( cart => {
-        res.status(200).send(cart);
-    })
-	.catch( error => {
-        res.status(500).send(error);
-    })
-}
+const getCart = ( async ( req, res, next ) => {
+    const findCart = await Cart.find({});
+    if( findCart ) {
+        return res.send( true );
+    }
+    return res.send( false );
+});
 
 const createCart = ( async ( req, res, next ) => {
     const newCart = new Cart({ user: req.decoded.userId });
