@@ -8,6 +8,6 @@
   </div>
   <div class="loggedIn" *ngIf="userIsAuthenticated">
     <p>שלום רענן אדוט</p>
-    <button mat-stroked-button color="error">התנתק</button>
+    <button mat-stroked-button color="error" (click)="onLogout()">התנתק</button>
   </div>
 </div>

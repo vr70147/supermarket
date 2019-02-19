@@ -16,6 +16,11 @@ export class LoginComponent implements OnInit {
   constructor( private authService: AuthService, private cartService: CartService ) { }
 
   ngOnInit() {
+    this.userIsAuthenticated = this.authService.getIsAuth();
+    this.authListenerSub = this.authService.getAuthStatusListener().subscribe(
+      ( isAuthenticated => {
+        this.userIsAuthenticated = isAuthenticated;
+      }));
   }
   onSubmitForm(loginForm: NgForm ) {
     if ( loginForm.invalid ) {
