@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
       (isAuthenticated => {
         this.cartService.isCartOpenIndicator();
         this.userIsAuthenticated = isAuthenticated;
+        this.isLoading = false;
       }));
     this.cartListenerSub = this.cartService.getCartStatusListener().subscribe(
       ( response: boolean ) => {
