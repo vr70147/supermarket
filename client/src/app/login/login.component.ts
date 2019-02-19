@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   userIsAuthenticated = false;
   private authListenerSub: Subscription;
   private cartOpenListenerSub: Subscription;
+  isLoading = false;
   constructor( private authService: AuthService, private cartService: CartService ) { }
 
   ngOnInit() {
@@ -26,6 +27,7 @@ export class LoginComponent implements OnInit {
     if ( loginForm.invalid ) {
       return;
     }
+    this.isLoading = true;
     this.authService.login( loginForm.value.email, loginForm.value.password );
     this.authListenerSub = this.authService.getAuthStatusListener().subscribe(
       (isAuthenticated => {

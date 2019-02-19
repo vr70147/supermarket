@@ -17,7 +17,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule,
          MatIconModule,
          MatInputModule,
-         MatButtonModule } from '@angular/material';
+         MatButtonModule,
+         MatProgressSpinnerModule } from '@angular/material';
 import { HomepageComponent } from './homepage/homepage.component';
 import { ShoppingPageComponent } from './shopping-page/shopping-page.component';
 import { AdminComponent } from './admin/admin.component';
@@ -49,6 +50,7 @@ import { AuthInterceptor } from './auth-interceptor';
     MatIconModule,
     MatButtonModule,
     MatInputModule,
+    MatProgressSpinnerModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]

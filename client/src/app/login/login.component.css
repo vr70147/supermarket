@@ -22,6 +22,11 @@ mat-form-field, button {
   text-align: center;
   font-family: 'Assistant', sans-serif;
 }
+mat-spinner {
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 30vh;
+}
 form input {
   width: 100%;
 }

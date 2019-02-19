@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Signup } from '../model/signup.model';
 import { Login } from '../model/login.model';
 import { Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 
 @Injectable({
@@ -12,7 +13,8 @@ export class AuthService {
   private token: string;
   isAuthenticated = false;
   private authStatusListener = new Subject<boolean>();
-  constructor( private http: HttpClient ) { }
+
+  constructor( private http: HttpClient, private router: Router ) { }
 
   getToken() {
     return this.token;
@@ -38,9 +40,10 @@ export class AuthService {
     .subscribe( response => {
       const token = response.token;
       this.token = token;
-      if( token ) {
+      if ( token ) {
         this.isAuthenticated = true;
         this.authStatusListener.next(true);
+
       }
 
     });

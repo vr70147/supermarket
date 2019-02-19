@@ -1,18 +1,19 @@
 <form (submit)="onSubmitForm(loginForm)" #loginForm="ngForm" *ngIf="!userIsAuthenticated">
-  <div class="title">
+  <div class="title" *ngIf="!isLoading">
       <h3>כניסה למערכת</h3>
       <h4>נא מלאו פרטים כדי להמשיך</h4>
   </div>
-  <mat-form-field>
+  <mat-form-field *ngIf="!isLoading">
     <input type="text" matInput placeholder="שם משתמש" ngModel name="email" required #email="ngModel">
     <mat-error *ngIf="email.invalid">שדה חובה</mat-error>
   </mat-form-field>
-  <mat-form-field>
+  <mat-form-field *ngIf="!isLoading">
     <input type="password" matInput placeholder="סיסמא" ngModel name="password" required #pass="ngModel">
     <mat-error *ngIf="pass.invalid">שדה חובה</mat-error>
   </mat-form-field>
-    <button type="submit" mat-raised-button color="primary">היכנסו</button>
-    <p>עדיין לא נרשמת? <a routerLink="/signup" routeLinkActive="mat-accent">הירשם</a></p>
+    <button type="submit" mat-raised-button color="primary" *ngIf="!isLoading">היכנסו</button>
+    <p *ngIf="!isLoading">עדיין לא נרשמת? <a routerLink="/signup" routeLinkActive="mat-accent" *ngIf="!isLoading">הירשם</a></p>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
 </form>
 <div class="goToshopping" *ngIf="userIsAuthenticated">
   <button>התחל קניה</button>
