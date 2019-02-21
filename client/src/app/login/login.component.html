@@ -18,4 +18,5 @@
 <div class="goToshopping" *ngIf="userIsAuthenticated">
   <button *ngIf="!isCartOpen" mat-raised-button color="primary">התחל קניה</button>
   <button *ngIf="isCartOpen" mat-raised-button color="primary">המשך קניה</button>
+  <p> {{ isCartOpen }}</p>
 </div>

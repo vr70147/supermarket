@@ -24,6 +24,12 @@ export class LoginComponent implements OnInit {
       ( isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
       }));
+    this.cartListenerSub = this.cartService.getCartStatusListener().subscribe(
+      ( response: boolean ) => {
+        console.log(response);
+        this.isCartOpen = response;
+      }
+    );
   }
   onSubmitForm(loginForm: NgForm ) {
     if ( loginForm.invalid ) {
