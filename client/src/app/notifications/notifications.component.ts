@@ -11,6 +11,7 @@ import { ProductService } from '../service/product.service';
 export class NotificationsComponent implements OnInit {
   products: Product[] = [];
   random: Array<any> = [];
+  randomStatus = false;
   totalProducts: number;
   productSub: Subscription;
   constructor( private service: ProductService ) { }
@@ -26,6 +27,9 @@ export class NotificationsComponent implements OnInit {
       this.random.push(product[Math.floor(mathRandom)].name);
       this.random.push(product[Math.floor(mathRandom)].price);
       this.totalProducts = product.length;
+      if ( this.random.length > 0 ) {
+        this.randomStatus = true;
+      }
     });
   }
 }
