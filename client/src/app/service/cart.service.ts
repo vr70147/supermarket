@@ -16,6 +16,7 @@ export class CartService {
 
   isCartOpenIndicator() {
     this.http.get('http://localhost:3000/cart').subscribe(( ( cart: boolean ) => {
+        console.log(cart);
         this.isCartOpen = cart;
         this.saveCartStatus(cart);
         this.isCartOpenListener.next(cart);

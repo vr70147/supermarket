@@ -2,11 +2,17 @@
 const Cart = require('../model/cart');
 
 const getCart = ( async ( req, res, next ) => {
-    const findCart = await Cart.find({});
-    if( findCart ) {
-        return res.send( true );
+    try {
+        const findCart = await Cart.find({});
+        console.log(findCart);
+        if( findCart.length > 0 ) {
+            return res.send( true );
+        }
+        return res.send( false );
     }
-    return res.send( false );
+    catch(error) {
+        return res.status(500).send(error);
+    }
 });
 
 const createCart = ( async ( req, res, next ) => {
