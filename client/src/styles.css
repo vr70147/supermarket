@@ -38,7 +38,7 @@ app-header {
   justify-content: space-between;
 }
 
-app-homepage {
+app-homepage, app-shopping-page {
   display: flex;
   flex-direction: row;
   width: 96vw;

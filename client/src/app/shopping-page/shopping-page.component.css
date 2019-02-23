@@ -1,0 +1,11 @@
+app-cart, app-products {
+  width: 25vw;
+  margin-top: 1vw;
+  height: 80vh;
+  border: 1px solid rgb(214, 214, 214);
+  border-radius: 5px;
+  overflow: hidden;
+}
+app-products {
+  width: 69vw;
+}
