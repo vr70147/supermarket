@@ -3,10 +3,9 @@ const Product = require('../model/product');
 const getProducts = ( async (req, res, next) => {
     try {
         const gotAllProducts = await Product.find({}).populate('category', 'name');
-        
         if ( gotAllProducts ) {
             return res.status(200).json({
-                products: gotAllProducts,
+                products: gotAllProducts
             });
         }
     }

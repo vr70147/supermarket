@@ -59,27 +59,27 @@ module.exports.deleteItemFromCart = async req => {
 		return false;
 	}
 }
-module.exports.createCart = async req => {
+module.exports.createCart = async ( req, newCart ) => {
 	try {
 		const createNewCart = await Cart.find({ user: req.decoded.userId });
-        if( createNewCart ) {
-            return res.status(500).send({
-                massage: 'קיימת כבר עגלה פתוחה'
-            });
+		
+        if( createNewCart.length > 0 ) {
+            return false;
         }
-        
 		const newCartCreated = await newCart.save();
-		if (newCartCreated ) {
-			return cart = {
+		if ( newCartCreated ) {
+			const cartValues = [{
 				id: newCartCreated._id,
                 items: newCartCreated.items,
                 user: newCartCreated.user,
-                date: newCartCreated.date.toString().split(" ")
-			}
+				date: newCartCreated.date.toString().split(" "),
+			}]
+			return cartValues;
 		}
 		return false;
 	}
 	catch (error) {
+		console.log('error');
 		return false;
 	}
 	

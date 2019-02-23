@@ -16,6 +16,6 @@
     <mat-spinner *ngIf="isLoading"></mat-spinner>
 </form>
 <div class="goToshopping" *ngIf="userIsAuthenticated">
-  <button *ngIf="!isCartOpen" mat-raised-button color="primary">התחל קניה</button>
+  <button *ngIf="!isCartOpen" mat-raised-button color="primary" (click)="createCart()">התחל קניה</button>
   <button *ngIf="isCartOpen" mat-raised-button color="primary">המשך קניה</button>
 </div>

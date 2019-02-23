@@ -14,7 +14,7 @@ export class ProductService {
   constructor( private http: HttpClient ) { }
 
   getProducts() {
-    return this.http.get< {products: Array<any>, randomalyProduct: Array<any>}>(
+    return this.http.get< {products: Array<any>}>(
       'http://localhost:3000/products'
     ).pipe( map( productsData => {
       return productsData.products.map( product => {

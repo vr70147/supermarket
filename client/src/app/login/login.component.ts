@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   userIsAuthenticated = false;
   private authListenerSub: Subscription;
   private cartListenerSub: Subscription;
+  private newCartListenerSub: Subscription;
   isCartOpen = false;
   isLoading = false;
   constructor( private authService: AuthService, private cartService: CartService ) { }
@@ -28,7 +29,6 @@ export class LoginComponent implements OnInit {
       this.cartService.isCartOpenIndicator();
       this.cartListenerSub = this.cartService.getCartStatusListener().subscribe(
         ( response: boolean ) => {
-          console.log(response);
           this.isCartOpen = response;
         }
       );
@@ -53,6 +53,10 @@ export class LoginComponent implements OnInit {
       }
     );
     loginForm.reset();
+  }
 
+  createCart() {
+    const nothing = { noValue: ''};
+    this.cartService.createNewCart( nothing );
   }
 }

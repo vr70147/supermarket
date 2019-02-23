@@ -1,6 +1,6 @@
 export interface Cart {
   id: string;
   user: string;
-  date: Date;
-  item: [];
+  date: Array<string>;
+  items: Array<any>;
 }

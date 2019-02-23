@@ -4,7 +4,6 @@ const Cart = require('../model/cart');
 const getCart = ( async ( req, res, next ) => {
     try {
         const findCart = await Cart.find({});
-        console.log(findCart);
         if( findCart.length > 0 ) {
             return res.send( true );
         }
@@ -16,10 +15,13 @@ const getCart = ( async ( req, res, next ) => {
 });
 
 const createCart = ( async ( req, res, next ) => {
+    
     const newCart = new Cart({ user: req.decoded.userId });
     const createdCart = await Cart.createCart(req, newCart);
-    if ( createdCart.cart ) {
-        return res.status(200).send(createdCart.cart);
+    if ( createdCart ) {
+        return res.status(200).json({
+            cart: createdCart
+        });
     }
     res.status(500).json({
         massage: 'קיימת כבר עגלה פתוחה'
