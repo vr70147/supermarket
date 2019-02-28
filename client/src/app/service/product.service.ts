@@ -13,6 +13,10 @@ export class ProductService {
 
   constructor( private http: HttpClient ) { }
 
+  getProductUpdateListener() {
+    return this.productsUpdated.asObservable();
+  }
+
   getProducts() {
     return this.http.get< {products: Array<any>}>(
       'http://localhost:3000/products'
@@ -32,9 +36,11 @@ export class ProductService {
     });
   }
 
-  getProductUpdateListener() {
-    return this.productsUpdated.asObservable();
+  addProductToCart() {
+
   }
+
+
 
 
 }

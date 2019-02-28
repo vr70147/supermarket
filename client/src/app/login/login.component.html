@@ -17,5 +17,5 @@
 </form>
 <div class="goToshopping" *ngIf="userIsAuthenticated">
   <button *ngIf="!isCartOpen" mat-raised-button color="primary" (click)="createCart()">התחל קניה</button>
-  <button *ngIf="isCartOpen" mat-raised-button color="primary">המשך קניה</button>
+  <button *ngIf="isCartOpen" mat-raised-button color="primary" (click)="continueShopping()">המשך קניה</button>
 </div>

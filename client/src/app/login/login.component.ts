@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { AuthService } from '../service/auth.service';
 import { CartService } from '../service/cart.service';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   private newCartListenerSub: Subscription;
   isCartOpen = false;
   isLoading = false;
-  constructor( private authService: AuthService, private cartService: CartService ) { }
+  constructor( private authService: AuthService, private cartService: CartService, private router: Router ) { }
 
   ngOnInit() {
     this.isLoading = false;
@@ -58,5 +59,8 @@ export class LoginComponent implements OnInit {
   createCart() {
     const nothing = { noValue: ''};
     this.cartService.createNewCart( nothing );
+  }
+  continueShopping() {
+    this.router.navigate(['/shopping']);
   }
 }

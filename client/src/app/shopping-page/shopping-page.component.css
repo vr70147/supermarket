@@ -4,7 +4,8 @@ app-cart, app-products {
   height: 80vh;
   border: 1px solid rgb(214, 214, 214);
   border-radius: 5px;
-  overflow: hidden;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 app-products {
   width: 69vw;

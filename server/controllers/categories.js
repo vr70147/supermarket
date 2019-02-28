@@ -14,6 +14,7 @@ const addCategory = ( async ( req, res, next ) => {
     let categoryCreated = await Category.createCategory( newCategory );
     if( categoryCreated ) {
         return res.status(200).json({
+            category: newCategory.name,
             message: 'הקטגוריה נוצרה בהצלחה'
         });
     };

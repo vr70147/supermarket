@@ -1,3 +1,22 @@
 <div class="search-section">
   <input type="text" placeholder="חפש מוצר">
 </div>
+<div class="products">
+  <div class="product" *ngFor="let product of products">
+    <div class="product-image">
+      <img [src]="product.image" alt="">
+    </div>
+     <div class="price">
+       <p>{{ product.price }} ₪</p>
+     </div>
+     <hr>
+     <div class="name">
+        <p>{{ product.name }}</p>
+      </div>
+      <hr>
+      <div class="btn-cont">
+          <button mat-raised-button color="primary" (click)="addToCart(product, qty)">הוסף לעגלה</button>
+          <input type="number" value="1" class="qty" ngModel #qty="ngModel" placeholder="1">
+      </div>
+  </div>
+</div>

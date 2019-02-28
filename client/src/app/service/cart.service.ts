@@ -11,8 +11,11 @@ import { map } from 'rxjs/operators';
 export class CartService {
   isCartOpen = false;
   private cart: Cart[] = [];
+  private cartItems: object = {};
+  private isCartItemsListener = new Subject<object>();
   private isCartOpenListener = new Subject<boolean>();
   private isNewCartListener = new Subject<Cart[]>();
+
   constructor( private http: HttpClient, private router: Router ) { }
 
   getCartStatusListener() {
@@ -21,6 +24,9 @@ export class CartService {
 
   getNewCartListener() {
     return this.isNewCartListener.asObservable();
+  }
+  getCartItemsListener() {
+    return this.isCartItemsListener.asObservable();
   }
 
   isCartOpenIndicator() {
@@ -49,6 +55,14 @@ export class CartService {
         this.isNewCartListener.next( [ ...this.cart ] );
         this.router.navigate(['/shopping']);
       });
+  }
+
+  getCartItems() {
+    this.http.get<{ items: Array<any> }>('http://localhost:3000/cart/products')
+    .subscribe( items => {
+      this.cartItems = items;
+      this.isCartItemsListener.next(items);
+    });
   }
 
   autoCartStatus() {

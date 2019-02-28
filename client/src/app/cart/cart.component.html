@@ -1,3 +1,12 @@
 <div class="title">
   <h4>העגלה שלי</h4>
 </div>
+<div class="cart">
+  <div class="item" *ngFor="let item of items">
+    <img [src]="item.image" alt="" class="innerItem">
+    <p class="innerItem">{{ item.name }}</p>
+    <p class="innerItem">₪{{ item.price}}</p>
+    <input type="number" [(ngModel)]="item.qty" class="innerItem">
+    <button mat-raised-button color="warn" class="innerItem">ביטול</button>
+  </div>
+</div>
