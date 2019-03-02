@@ -29,15 +29,16 @@
   height: auto;
   flex-flow: wrap;
   display: flex;
+  margin: 1vh;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: flex-start;
 }
 
 .product {
   width: calc(100% / 5);
   height: 30vh;
-  margin-top: 2vh;
+  margin: 1vh;
   border: 1px solid rgb(214, 214, 214);
   display: inline-flex;
   flex-direction: column;
