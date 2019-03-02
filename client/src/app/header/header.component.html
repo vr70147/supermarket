@@ -7,7 +7,7 @@
     <p>שלום אורח</p>
   </div>
   <div class="loggedIn" *ngIf="userIsAuthenticated">
-    <p>שלום רענן אדוט</p>
+    <p>שלום {{ userName }}</p>
     <button mat-stroked-button color="error" (click)="onLogout()">התנתק</button>
   </div>
 </div>

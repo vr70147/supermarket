@@ -38,9 +38,12 @@ const deleteCart = (( req, res, next ) => {
 
 const getCartItems = (( req, res, next ) => {
     Cart.find({ user: req.decoded.userId }).then( cart => {
-        res.status(200).send({
-            items: cart[0].items
-        });
+        console.log(cart);
+        if( cart[0].items != undefined) {
+            res.status(200).send({
+                items: cart[0].items
+            });
+        }
     })
 });
 

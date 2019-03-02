@@ -58,13 +58,15 @@ router.post('/login', ( req, res, next ) => {
         }
 
         const token = jwt.sign(
-            { email: fetchedUser.email, userId: fetchedUser._id },
+            { email: fetchedUser.email, userId: fetchedUser._id, name: fetchedUser.fname },
             process.env.JWT_KEY,
             { expiresIn: '1h' }
         );
-        res.status(200).json({
+        return res.status(200).json({
             token: token,
-            expiresIn: 3600
+            expiresIn: 3600,
+            name: fetchedUser.fname
+
         })
     })
     .catch(err => {
@@ -73,4 +75,5 @@ router.post('/login', ( req, res, next ) => {
         });
     });
 });
+
 module.exports = router;
