@@ -4,8 +4,11 @@ app-cart, app-products {
   height: 80vh;
   border: 1px solid rgb(214, 214, 214);
   border-radius: 5px;
-  overflow-y: scroll;
-  overflow-x: hidden;
+}
+app-cart {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 }
 app-products {
   width: 69vw;
