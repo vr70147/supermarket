@@ -10,7 +10,7 @@ import { CartService } from './service/cart.service';
 export class AppComponent implements OnInit {
 
 
-  constructor( private authService: AuthService, private cartService: CartService ) {}
+  constructor( private authService: AuthService ) {}
 
   ngOnInit() {
     this.authService.autoAuthUser();

@@ -1,0 +1,15 @@
+app-create-product, app-products {
+  width: 25vw;
+  margin-top: 1vw;
+  height: 80vh;
+  border: 1px solid rgb(214, 214, 214);
+  border-radius: 5px;
+}
+app-create-product {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+app-products {
+  width: 69vw;
+}

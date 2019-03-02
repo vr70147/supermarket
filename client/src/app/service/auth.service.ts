@@ -31,7 +31,11 @@ export class AuthService {
     return this.isAuthenticated;
   }
 
-  getUserName() {
+  getIsUsername() {
+    return this.userName;
+  }
+
+  getUserNameListener() {
     return this.userNameListener.asObservable();
   }
 
@@ -47,6 +51,8 @@ export class AuthService {
       this.isAuthenticated = true;
       this.setAuthTimer(expiresIn / 1000);
       this.authStatusListener.next(true);
+      this.userName = authInfo.username;
+      this.userNameListener.next(authInfo.username);
     }
   }
 
@@ -62,6 +68,7 @@ export class AuthService {
     .subscribe( response => {
       console.log(response);
       const token = response.token;
+      const username = response.name;
       this.token = token;
       if ( token ) {
         const expiredInDuration = response.expiresIn;
@@ -69,10 +76,11 @@ export class AuthService {
         this.isAuthenticated = true;
         this.authStatusListener.next(true);
         const now = new Date();
-        const expirationDate = new Date( now.getTime() + expiredInDuration * 1000 );
-        this.saveAuthData( token, expirationDate );
-        this.userName = response.name;
+        this.userName = username;
         this.userNameListener.next(this.userName);
+        const expirationDate = new Date( now.getTime() + expiredInDuration * 1000 );
+        this.saveAuthData( token, expirationDate, username );
+
       }
 
     });
@@ -85,25 +93,29 @@ export class AuthService {
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
   }
-  private saveAuthData(token: string, expirationDate: Date) {
+  private saveAuthData(token: string, expirationDate: Date, name: string) {
     localStorage.setItem('token', token);
     localStorage.setItem('expiration', expirationDate.toISOString());
+    localStorage.setItem('username', name);
   }
 
   private clearAuthData() {
     localStorage.removeItem('token');
     localStorage.removeItem('expiration');
+    localStorage.removeItem('username');
   }
 
   private getAuthData() {
     const token = localStorage.getItem('token');
+    const username = localStorage.getItem('username');
     const expirationDate = localStorage.getItem('expiration');
-    if ( !token || !expirationDate ) {
+    if ( !token || !expirationDate || !username ) {
       return;
     }
     return {
       token: token,
-      expirationDate: new Date(expirationDate)
+      expirationDate: new Date(expirationDate),
+      username: username
     }
   }
   private setAuthTimer( duration: number) {
