@@ -45,6 +45,10 @@
   align-items: center;
   justify-content: space-between;
 }
+hr {
+  width: 80%;
+  border: 1px solid lightgray;
+}
 .product-image {
   height: 10vh;
   width: auto;

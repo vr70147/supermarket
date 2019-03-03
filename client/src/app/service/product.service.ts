@@ -10,11 +10,17 @@ import { map } from 'rxjs/operators';
 export class ProductService {
   private products: Product[] = [];
   private productsUpdated = new Subject<Product[]>();
+  private editProduct = [];
+  private editProductListener = new Subject<Product[]>();
 
   constructor( private http: HttpClient ) { }
 
   getProductUpdateListener() {
     return this.productsUpdated.asObservable();
+  }
+
+  isEditProductListener() {
+    return this.editProductListener.asObservable();
   }
 
   getProducts() {
@@ -38,6 +44,16 @@ export class ProductService {
 
   addProductToCart() {
 
+  }
+
+  addProductToEdit( product: object ) {
+ // tslint:disable-next-line:forin
+    let obj = {}
+    for ( const key in product ) {
+      obj[key] = product[key];
+    }
+    this.editProduct.push(obj);
+    this.editProductListener.next(this.editProduct);
   }
 
 

@@ -15,8 +15,10 @@ import { CategoriesComponent } from './categories/categories.component';
 import { CreateProductComponent } from './create-product/create-product.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule,
+         MatFormFieldModule,
          MatIconModule,
          MatInputModule,
+         MatCardModule,
          MatButtonModule,
          MatProgressSpinnerModule } from '@angular/material';
 import { HomepageComponent } from './homepage/homepage.component';
@@ -52,7 +54,9 @@ import { CheckoutComponent } from './checkout/checkout.component';
     MatIconModule,
     MatButtonModule,
     MatInputModule,
-    MatProgressSpinnerModule
+    MatCardModule,
+    MatProgressSpinnerModule,
+    MatFormFieldModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]

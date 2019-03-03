@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Product } from '../model/product.model';
+import { ProductService } from '../service/product.service';
 
 @Component({
   selector: 'app-create-product',
@@ -6,10 +9,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create-product.component.css']
 })
 export class CreateProductComponent implements OnInit {
+  products: Product[] = [];
+  private productSub: Subscription;
+  flag = false;
+  isLoading = false;
 
-  constructor() { }
+  constructor( private service: ProductService) { }
 
   ngOnInit() {
+    this.productSub = this.service.isEditProductListener().subscribe(
+      ( product: Product[] ) => {
+        this.products = product;
+        this.flag = true;
+      }
+    );
   }
 
+  onSaveProduct( event: Event ) {
+
+  }
 }

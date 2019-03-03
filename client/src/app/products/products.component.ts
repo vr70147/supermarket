@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../service/product.service';
 import { Product } from '../model/product.model';
-import { Subscription } from 'rxjs';
+import { Subscription, Subject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -10,18 +11,25 @@ import { Subscription } from 'rxjs';
 })
 export class ProductsComponent implements OnInit {
   products: Product[] = [];
+  isCurrentUrl: boolean;
   private productsSub: Subscription;
 
-  constructor( private service: ProductService) { }
+  constructor( private service: ProductService, private router: Router) { }
 
   ngOnInit() {
     this.service.getProducts();
     this.productsSub = this.service.getProductUpdateListener().subscribe(
       ( products: Product[]) => {
-        console.log(products)
         this.products = products;
+        console.log(this.products)
       }
     )
+    const url = this.router.url;
+    if ( url === '/admin') {
+      return this.isCurrentUrl = true;
+    }
+    this.isCurrentUrl = false;
+
   }
 
   addToCart( productValues: Product, qty: HTMLInputElement ) {
@@ -31,8 +39,11 @@ export class ProductsComponent implements OnInit {
       id: productId,
       qty: quantity
     };
-
-
   }
 
+  addToEdit( productValues: Product ) {
+    console.log(productValues);
+    const product: Product = productValues;
+    this.service.addProductToEdit(product);
+  }
 }

@@ -1,0 +1,23 @@
+.createAndEditProduct {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+input[type="file"] {
+  visibility: hidden;
+}
+
+.adminForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 70%;
+  height: 100%;
+}
+.adminForm input, select {
+  width: 100%;
+}

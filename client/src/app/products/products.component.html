@@ -15,8 +15,9 @@
       </div>
       <hr>
       <div class="btn-cont">
-          <button mat-raised-button color="primary" (click)="addToCart(product, qty)">הוסף לעגלה</button>
-          <input type="number" value="1" class="qty" ngModel #qty="ngModel" placeholder="1">
+          <button mat-raised-button color="primary" (click)="addToEdit(product)" *ngIf="isCurrentUrl">עריכת מוצר</button>
+          <button mat-raised-button color="primary" (click)="addToCart(product, qty)" *ngIf="!isCurrentUrl">הוסף לעגלה</button>
+          <input type="number" value="1" class="qty" ngModel #qty="ngModel" placeholder="1" *ngIf="!isCurrentUrl">
       </div>
   </div>
 </div>

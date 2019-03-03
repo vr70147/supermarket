@@ -1,3 +1,50 @@
-<p>
-  create-product works!
-</p>
+<div class="createAndEditProduct">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form (submit)="onSaveProduct(productForm)" #productForm="ngForm" *ngIf="!isLoading">
+  <div class="editProduct adminForm" *ngFor="let product of products">
+      <div class="title" *ngIf="!isLoading">
+          <h4>עריכת מוצר נבחר</h4>
+      </div>
+          <mat-form-field *ngIf="!isLoading">
+            <input type="text"
+            matInput
+            placeholder="שם המוצר"
+            [ngModel]="product.name"
+            name="name"
+            required
+            #name="ngModel">
+          </mat-form-field>
+          <div>
+            <button
+            mat-stroked-button
+            type="button"
+            (click)="filePicker.click()">בחר תמונה</button>
+            <input type="file" #filePicker>
+          </div>
+          <mat-form-field *ngIf="!isLoading">
+              <input type="number"
+              matInput
+              placeholder="בחר/י מחיר"
+              [ngModel]="product.price"
+              name="price"
+              required
+              #price="ngModel">
+          </mat-form-field>
+          <mat-form-field *ngIf="!isLoading">
+            <select>
+              <option value='לק"ג'>לק"ג</option>
+              <option value='למ"ל'>למ"ל</option>
+              <option value="'ל-100 ג">ל-100 ג'</option>
+            </select>
+          </mat-form-field>
+          <button
+          mat-raised-button
+          color="primary"
+          *ngIf="!isLoading">היכנסו</button>
+        </div>
+        <div class="createProduct" *ngIf="!flag">
+            <p>create</p>
+        </div>
+      </form>
+
+</div>

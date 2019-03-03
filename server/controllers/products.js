@@ -19,7 +19,8 @@ const addProduct = ( async ( req, res, next ) => {
     const newProduct = new Product({
         name: req.body.name,
         image: url + '/images/' + req.file.filename,
-        price: req.body.price
+        price: req.body.price,
+        type: req.body.type
     });
     const productCreated = await Product.createProduct( newProduct );
     if( productCreated ) return res.status(200).json({ message: 'המוצר נוצר בהצלחה' })
