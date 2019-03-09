@@ -15,6 +15,7 @@ export class AuthService {
   private tokenTimer: any;
   private authStatusListener = new Subject<boolean>();
   private userName: string;
+  error = '';
   private userNameListener = new Subject<string>();
 
   constructor( private http: HttpClient, private router: Router, private cartService: CartService ) { }
@@ -66,7 +67,6 @@ export class AuthService {
     const authData: Login = { email, password };
     this.http.post<{ token: string, expiresIn: number, name: string }>('http://localhost:3000/users/login', authData )
     .subscribe( response => {
-      console.log(response);
       const token = response.token;
       const username = response.name;
       this.token = token;
@@ -80,9 +80,10 @@ export class AuthService {
         this.userNameListener.next(this.userName);
         const expirationDate = new Date( now.getTime() + expiredInDuration * 1000 );
         this.saveAuthData( token, expirationDate, username );
-
       }
-
+    },
+    error => {
+      this.authStatusListener.next(false);
     });
   }
   logout() {

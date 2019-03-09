@@ -1,50 +1,33 @@
 <div class="createAndEditProduct">
-  <mat-spinner *ngIf="isLoading"></mat-spinner>
-  <form (submit)="onSaveProduct(productForm)" #productForm="ngForm" *ngIf="!isLoading">
-  <div class="editProduct adminForm" *ngFor="let product of products">
-      <div class="title" *ngIf="!isLoading">
-          <h4>עריכת מוצר נבחר</h4>
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <div class="title" *ngIf="!isLoading && flag">
+        <h4>עריכת מוצר נבחר</h4>
+        <button (click)="flag=false"><mat-icon>add_circle_outline</mat-icon></button>
+    </div>
+    <form (submit)="onSaveProduct(editForm)" #editForm="ngForm" *ngIf="!isLoading && flag">
+      <div class="editProduct adminForm" *ngFor="let product of products">
+        <mat-form-field *ngIf="!isLoading">
+          <input type="text" matInput placeholder="שם המוצר" required [value]="product.name">
+        </mat-form-field>
+        <div class="img-picker">
+          <button mat-stroked-button type="button" (click)="filePicker.click()">בחר תמונה</button>
+          <input type="file" #filePicker>
+          <img [src]="product.image" alt="">
+        </div>
+        <mat-form-field *ngIf="!isLoading">
+            <input type="number" matInput placeholder="בחר/י מחיר"  required [value]="product.price">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select placeholder="נא לבחור סוג יחידה">
+              <mat-option *ngFor="let select of selects" [value]="select.unit">
+                {{ select.unit }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        <button type="submit" mat-raised-button color="primary" *ngIf="!isLoading">עדכן מוצר</button>
       </div>
-          <mat-form-field *ngIf="!isLoading">
-            <input type="text"
-            matInput
-            placeholder="שם המוצר"
-            [ngModel]="product.name"
-            name="name"
-            required
-            #name="ngModel">
-          </mat-form-field>
-          <div>
-            <button
-            mat-stroked-button
-            type="button"
-            (click)="filePicker.click()">בחר תמונה</button>
-            <input type="file" #filePicker>
-          </div>
-          <mat-form-field *ngIf="!isLoading">
-              <input type="number"
-              matInput
-              placeholder="בחר/י מחיר"
-              [ngModel]="product.price"
-              name="price"
-              required
-              #price="ngModel">
-          </mat-form-field>
-          <mat-form-field *ngIf="!isLoading">
-            <select>
-              <option value='לק"ג'>לק"ג</option>
-              <option value='למ"ל'>למ"ל</option>
-              <option value="'ל-100 ג">ל-100 ג'</option>
-            </select>
-          </mat-form-field>
-          <button
-          mat-raised-button
-          color="primary"
-          *ngIf="!isLoading">היכנסו</button>
-        </div>
-        <div class="createProduct" *ngIf="!flag">
-            <p>create</p>
-        </div>
-      </form>
-
+    </form>
+    <div class="createProduct" *ngIf="!flag">
+        <p>create</p>
+    </div>
 </div>

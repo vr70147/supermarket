@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   private newCartListenerSub: Subscription;
   isCartOpen = false;
   isLoading = false;
+  isError = false;
   constructor( private authService: AuthService, private cartService: CartService, private router: Router ) { }
 
   ngOnInit() {
@@ -38,12 +39,16 @@ export class LoginComponent implements OnInit {
   }
   onSubmitForm(loginForm: NgForm ) {
     if ( loginForm.invalid ) {
-      return;
+      return ;
     }
     this.isLoading = true;
     this.authService.login( loginForm.value.email, loginForm.value.password );
     this.authListenerSub = this.authService.getAuthStatusListener().subscribe(
       (isAuthenticated => {
+        if ( !isAuthenticated ) {
+          this.isLoading = false;
+          return this.isError = true;
+        }
         this.cartService.isCartOpenIndicator();
         this.userIsAuthenticated = isAuthenticated;
         this.isLoading = false;

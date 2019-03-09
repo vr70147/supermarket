@@ -77,3 +77,8 @@ hr {
 .btn-cont p {
   display: none;
 }
+
+button {
+  font-family: 'Assistant', sans-serif;
+  font-size: 1.2vw;
+ }

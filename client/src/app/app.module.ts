@@ -17,10 +17,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule,
          MatFormFieldModule,
          MatIconModule,
+         MatDialogModule,
          MatInputModule,
          MatCardModule,
          MatButtonModule,
-         MatProgressSpinnerModule } from '@angular/material';
+         MatProgressSpinnerModule,
+         MatSelectModule,
+         MatExpansionModule} from '@angular/material';
 import { HomepageComponent } from './homepage/homepage.component';
 import { ShoppingPageComponent } from './shopping-page/shopping-page.component';
 import { AdminComponent } from './admin/admin.component';
@@ -50,13 +53,16 @@ import { CheckoutComponent } from './checkout/checkout.component';
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
+    MatExpansionModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
     MatInputModule,
+    MatDialogModule,
     MatCardModule,
     MatProgressSpinnerModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatSelectModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]

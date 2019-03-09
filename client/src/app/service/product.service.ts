@@ -47,6 +47,7 @@ export class ProductService {
   }
 
   addProductToEdit( product: object ) {
+    this.editProduct = [];
  // tslint:disable-next-line:forin
     let obj = {}
     for ( const key in product ) {

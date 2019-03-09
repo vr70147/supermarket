@@ -3,6 +3,9 @@
       <h3>כניסה למערכת</h3>
       <h4>נא מלאו פרטים כדי להמשיך</h4>
   </div>
+  <div mat-dialog-content *ngIf="isError">
+      <p>Username or password is incorrect</p>
+  </div>
   <mat-form-field *ngIf="!isLoading">
     <input type="text" matInput placeholder="שם משתמש" ngModel name="email" required #email="ngModel">
     <mat-error *ngIf="email.invalid">שדה חובה</mat-error>

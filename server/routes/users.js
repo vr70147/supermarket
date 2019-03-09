@@ -19,7 +19,7 @@ router.post('/signup', ( req, res, next ) => {
         user.save()
         .then( result => {
             res.status(201).json({
-                massage: 'נרשמת בהצלחה!',
+                message: 'נרשמת בהצלחה!',
                 result: {
                     email: result.email,
                     city: result.city,
@@ -44,7 +44,7 @@ router.post('/login', ( req, res, next ) => {
     .then( user => {
         if( !user ) {
             return res.status(401).json({
-                massage: 'Auth Failed'
+                message: 'Auth Failed'
             });
         }
         fetchedUser = user;
@@ -53,7 +53,7 @@ router.post('/login', ( req, res, next ) => {
     .then( result => {
         if( !result ) {
             return res.status(401).json({
-                massage: 'Auth Failed'
+                message: 'Auth Failed'
             });
         }
 
@@ -71,7 +71,7 @@ router.post('/login', ( req, res, next ) => {
     })
     .catch(err => {
         return res.status(401).json({
-            massage: 'Auth Failed'
+            message: 'Auth Failed'
         });
     });
 });
