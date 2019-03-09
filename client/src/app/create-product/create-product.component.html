@@ -7,7 +7,7 @@
     <form (submit)="onSaveProduct(editForm)" #editForm="ngForm" *ngIf="!isLoading && flag">
       <div class="editProduct adminForm" *ngFor="let product of products">
         <mat-form-field *ngIf="!isLoading">
-          <input type="text" matInput placeholder="שם המוצר" required [value]="product.name">
+          <input type="text" matInput placeholder="שם המוצר" required [ngModel]="product.name" name="name" #name="ngModel">
         </mat-form-field>
         <div class="img-picker">
           <button mat-stroked-button type="button" (click)="filePicker.click()">בחר תמונה</button>
@@ -15,11 +15,11 @@
           <img [src]="product.image" alt="">
         </div>
         <mat-form-field *ngIf="!isLoading">
-            <input type="number" matInput placeholder="בחר/י מחיר"  required [value]="product.price">
+            <input type="number" matInput placeholder="בחר/י מחיר" name="price" #price="ngModel" required [ngModel]="product.price">
         </mat-form-field>
         <mat-form-field>
             <mat-select placeholder="נא לבחור סוג יחידה">
-              <mat-option *ngFor="let select of selects" [value]="select.unit">
+              <mat-option *ngFor="let select of selects" [ngModel]="select.unit" name="unit" #unit="ngModel">
                 {{ select.unit }}
               </mat-option>
             </mat-select>

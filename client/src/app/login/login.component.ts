@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit {
 
   }
   onSubmitForm(loginForm: NgForm ) {
+    this.isError = false;
     if ( loginForm.invalid ) {
       return ;
     }

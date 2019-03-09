@@ -3,6 +3,7 @@ import { ProductService } from '../service/product.service';
 import { Product } from '../model/product.model';
 import { Subscription, Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-products',
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class ProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
+  qty: number = 1;
   isCurrentUrl: boolean;
   private productsSub: Subscription;
 
@@ -23,7 +25,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.products = products;
         console.log(this.products)
       }
-    )
+    );
     const url = this.router.url;
     if ( url === '/admin') {
       return this.isCurrentUrl = true;
@@ -32,13 +34,17 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   }
 
-  addToCart( productValues: Product, qty: HTMLInputElement ) {
-    const quantity: string = qty.value;
-    const productId: string = productValues.id;
+  addToCart( product: any, qty: number ) {
+
+    this.qty = qty;
+    const productId = product.id;
     const data = {
       id: productId,
-      qty: quantity
+      qty: this.qty
     };
+    this.service.addProductToCart(data);
+
+
   }
 
   addToEdit( productValues: Product ) {

@@ -4,6 +4,7 @@ const getProducts = ( async (req, res, next) => {
     try {
         const gotAllProducts = await Product.find({}).populate('category', 'name');
         if ( gotAllProducts ) {
+            console.log(gotAllProducts)
             return res.status(200).json({
                 products: gotAllProducts
             });
@@ -20,7 +21,8 @@ const addProduct = ( async ( req, res, next ) => {
         name: req.body.name,
         image: url + '/images/' + req.file.filename,
         price: req.body.price,
-        type: req.body.type
+        unit: req.body.unit,
+        category: req.body.category
     });
     const productCreated = await Product.createProduct( newProduct );
     if( productCreated ) return res.status(200).json({ message: 'המוצר נוצר בהצלחה' })

@@ -1,0 +1,16 @@
+li {
+  list-style: none;
+}
+
+li button {
+  background: none;
+  border: none;
+  font-size: 1vw;
+  font-family: 'Assistant', sans-serif;
+  outline: none;
+  height: 4vh;
+  cursor: pointer;
+}
+li button:hover, li button:focus  {
+  border-bottom: 3px solid rgb(180, 180, 180);
+}

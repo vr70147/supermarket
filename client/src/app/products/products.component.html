@@ -1,13 +1,14 @@
 <div class="search-section">
   <input type="text" placeholder="חפש מוצר">
 </div>
+<app-categories></app-categories>
 <div class="products">
   <div class="product" *ngFor="let product of products">
     <div class="product-image">
       <img [src]="product.image" alt="">
     </div>
      <div class="price">
-       <p>{{ product.price }} ₪</p>
+       <p>{{ product.price }} ₪ {{ product.unit }}</p>
      </div>
      <hr>
      <div class="name">
@@ -15,9 +16,9 @@
       </div>
       <hr>
       <div class="btn-cont">
+          <input type="number" class="qty" [(ngModel)]="qty" *ngIf="!isCurrentUrl" min="1">
           <button mat-raised-button color="primary" (click)="addToEdit(product)" *ngIf="isCurrentUrl">עריכת מוצר</button>
           <button mat-raised-button color="primary" (click)="addToCart(product, qty)" *ngIf="!isCurrentUrl">הוסף לעגלה</button>
-          <input type="number" value="1" class="qty" ngModel #qty="ngModel" placeholder="1" *ngIf="!isCurrentUrl">
       </div>
   </div>
 </div>

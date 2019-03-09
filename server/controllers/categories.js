@@ -1,12 +1,17 @@
 const Category = require('../model/category');
 
-const getCategories = (( req, res, next ) => {
-    Category.find({}).then( categories => {
-        res.status(200).send(categories);
-    })
-	.catch( error => {
-        res.status(500).send(error);
-    })
+const getCategories = ( async( req, res, next ) => {
+    try {
+        const getAllCategories = await Category.find({});
+        if ( getAllCategories ) {
+            return res.status(200).json({
+                categories: getAllCategories
+            });
+        }
+    }
+    catch (error) {
+        return res.status(500).send( error );
+    }
 });
 
 const addCategory = ( async ( req, res, next ) => {

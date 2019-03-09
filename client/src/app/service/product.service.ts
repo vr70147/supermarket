@@ -9,9 +9,11 @@ import { map } from 'rxjs/operators';
 })
 export class ProductService {
   private products: Product[] = [];
+  originalArray: Product[] = [];
   private productsUpdated = new Subject<Product[]>();
   private editProduct = [];
   private editProductListener = new Subject<Product[]>();
+
 
   constructor( private http: HttpClient ) { }
 
@@ -32,29 +34,53 @@ export class ProductService {
           id: product._id,
           name: product.name,
           image: product.image,
-          price: product.price
+          price: product.price,
+          unit: product.unit,
+          category: product.category
         };
       });
     }))
     .subscribe(transformedProducts => {
       this.products = transformedProducts;
+      this.originalArray = transformedProducts;
       this.productsUpdated.next([...this.products]);
     });
   }
 
-  addProductToCart() {
-
+  addProductToCart(productData) {
+    this.http.put('http://localhost:3000/cart/products', productData )
+    .subscribe( itemData => {
+      console.log(itemData);
+    });
   }
 
   addProductToEdit( product: object ) {
     this.editProduct = [];
- // tslint:disable-next-line:forin
-    let obj = {}
+
+    const obj = {};
+    // tslint:disable-next-line:forin
     for ( const key in product ) {
       obj[key] = product[key];
     }
     this.editProduct.push(obj);
     this.editProductListener.next(this.editProduct);
+  }
+
+  filterByCategory( id: string ) {
+    const filteredArray = [];
+    if ( id === '5c8405661c9d44000079f46e') {
+      this.productsUpdated.next([...this.originalArray]);
+      return;
+    }
+    for ( let i = 0 ; i < this.originalArray.length ; i++ ) {
+      if ( this.originalArray[i].category._id === id ) {
+        filteredArray.push(this.originalArray[i]);
+      }
+    }
+    console.log(filteredArray)
+    this.products = filteredArray;
+    this.productsUpdated.next([...this.products]);
+
   }
 
 

@@ -10,7 +10,7 @@ import { throwToolbarMixedModesError } from '@angular/material';
 })
 export class CartComponent implements OnInit {
   items: Array<any> = [];
-  total: number;
+  total = 0;
   private cartSub: Subscription;
   constructor( private service: CartService ) { }
 
