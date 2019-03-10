@@ -12,6 +12,7 @@ export class CartComponent implements OnInit {
   items: Array<any> = [];
   total = 0;
   private cartSub: Subscription;
+  private cartUpdatedSub: Subscription;
   constructor( private service: CartService ) { }
 
    ngOnInit() {

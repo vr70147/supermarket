@@ -72,16 +72,16 @@ hr {
   margin: 0;
 }
 .btn-cont {
-  width: 70%;
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-evenly;
   margin-bottom: 1vh;
 }
 
 .btn-cont input[type="number"] {
-  width: 2.7vw;
+  width: 2.5vw;
   height: 1.7vw;
 }
 .btn-cont p {

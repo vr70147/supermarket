@@ -12,9 +12,12 @@ import { NgForm } from '@angular/forms';
 })
 export class ProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
+  cartItems: Array<any> = [];
   qty: number = 1;
   isCurrentUrl: boolean;
+  private cartItemsListener = new Subject<Array<any>>();
   private productsSub: Subscription;
+  private cartItemsSub: Subscription;
 
   constructor( private service: ProductService, private router: Router) { }
 
@@ -34,8 +37,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   }
 
-  addToCart( product: any, qty: number ) {
+  getCartItems() {
+    return this.cartItemsListener.asObservable();
+  }
 
+  addToCart( product: any, qty: number ) {
     this.qty = qty;
     const productId = product.id;
     const data = {
@@ -43,16 +49,21 @@ export class ProductsComponent implements OnInit, OnDestroy {
       qty: this.qty
     };
     this.service.addProductToCart(data);
-
-
+    this.cartItemsSub = this.service.getAddedProductInCart().subscribe(
+      ( items: Array<any> ) => {
+        this.cartItems = items;
+        this.cartItemsListener.next(this.cartItems);
+      }
+    )
   }
 
   addToEdit( productValues: Product ) {
     const product: Product = productValues;
     this.service.addProductToEdit(product);
   }
-ngOnDestroy() {
-  this.productsSub.unsubscribe();
-}
 
+  ngOnDestroy() {
+    this.productsSub.unsubscribe();
+    this.cartItemsSub.unsubscribe();
+  }
 }
