@@ -13,7 +13,7 @@ import { NgForm } from '@angular/forms';
 export class ProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   cartItems: Array<any> = [];
-  qty: number = 1;
+  qty = 1;
   isCurrentUrl: boolean;
   private cartItemsListener = new Subject<Array<any>>();
   private productsSub: Subscription;
@@ -26,7 +26,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.productsSub = this.service.getProductUpdateListener().subscribe(
       ( products: Product[]) => {
         this.products = products;
-        console.log(this.products)
       }
     );
     const url = this.router.url;
@@ -54,7 +53,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.cartItems = items;
         this.cartItemsListener.next(this.cartItems);
       }
-    )
+    );
   }
 
   addToEdit( productValues: Product ) {

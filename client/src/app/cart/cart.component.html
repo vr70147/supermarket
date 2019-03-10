@@ -3,11 +3,13 @@
 </div>
 <div class="cart">
   <div class="item" *ngFor="let item of items">
-    <img [src]="item.image" alt="" class="innerItem">
+    <div class="image" class="innerItem image">
+        <img [src]="item.image" alt="">
+    </div>
     <p class="innerItem">{{ item.name }}</p>
     <p class="innerItem">₪{{ item.price}}</p>
     <input type="number" [(ngModel)]="item.qty" class="innerItem">
-    <button mat-raised-button color="warn" class="innerItem">ביטול</button>
+    <button mat-raised-button color="warn" class="innerItem" (click)="deleteCartItems(item._id)">ביטול</button>
   </div>
 </div>
 <div class="total">

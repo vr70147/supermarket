@@ -65,6 +65,14 @@ export class CartService {
     });
   }
 
+  deleteItem(id: string) {
+    this.http.delete<{ message: string }>('http://localhost:3000/cart/products/' + id ).subscribe(
+      response => {
+        this.getCartItems();
+      }
+    );
+  }
+
   autoCartStatus() {
     const cartInfo = this.getCartStatus();
     if ( !cartInfo ) {

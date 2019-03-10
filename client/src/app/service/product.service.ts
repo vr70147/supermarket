@@ -84,7 +84,6 @@ export class ProductService {
         filteredArray.push(this.originalArray[i]);
       }
     }
-    console.log(filteredArray)
     this.products = filteredArray;
     this.productsUpdated.next([...this.products]);
 

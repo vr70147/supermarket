@@ -35,6 +35,14 @@
   text-align: center;
   margin: 0.5vw;
 }
+.image {
+  height: 100%;
+}
+
+.item img {
+  width: auto;
+  height: 100%;
+}
 input[type="number"] {
   height: 4vh;
 }

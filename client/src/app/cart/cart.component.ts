@@ -32,6 +32,10 @@ export class CartComponent implements OnInit {
     this.service.getCartItems();
   }
 
+  deleteCartItems( id: string ) {
+    this.service.deleteItem(id);
+  }
+
   getTotal() {
     const total = [];
     for ( let i = 0 ; i < this.items.length ; i++ ) {
