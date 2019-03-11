@@ -13,6 +13,10 @@
   </div>
 </div>
 <div class="total">
+  <button mat-raised-button color="primary" class="innerItem" (click)="continueToOrder()">סיום קניה</button>
   <button mat-raised-button color="warn" class="innerItem" (click)="deleteAllCartItems()">מחיקת כל המוצרים</button>
-  <h4>סה"כ לתשלום: ₪{{ total }}</h4>
+  <div class="totalText">
+      <h4>סה"כ לתשלום:</h4>
+      <h4>₪{{ total }}</h4>
+  </div>
 </div>

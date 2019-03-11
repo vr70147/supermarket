@@ -59,10 +59,21 @@ input[type="number"] {
   align-self: flex-end;
 }
 .total button {
-  height: 6vh;
-  width: 5vw;
+  height: 5vh;
+  width: 7vw;
   white-space: normal;
   line-height: 2vh;
+}
+.total h4 {
+  font-size: 1vw;
+  line-break: normal;
+}
+
+.totalText {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .item p {
   font-size: 0.8vw;

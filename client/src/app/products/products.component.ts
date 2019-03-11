@@ -71,13 +71,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
     const product: Product = productValues;
     this.service.addProductToEdit(product);
   }
-
-  ngOnDestroy() {
-    this.productsSub.unsubscribe();
-    this.cartItemsSub.unsubscribe();
-  }
-
   private assignCopy() {
     this.filteredProducts = Object.assign([], this.products);
- }
+  }
+  ngOnDestroy() {
+    this.productsSub.unsubscribe();
+    if ( this.cartItems.length < 0 ) {
+      this.cartItemsSub.unsubscribe();
+    }
+  }
 }

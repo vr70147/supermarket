@@ -15,6 +15,7 @@ export class CartService {
   private isCartItemsListener = new Subject<object>();
   private isCartOpenListener = new Subject<boolean>();
   private isNewCartListener = new Subject<Cart[]>();
+  private isRedirectToCheckoutListener = new Subject<boolean>();
 
   constructor( private http: HttpClient, private router: Router ) { }
 
