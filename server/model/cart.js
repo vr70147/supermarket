@@ -59,6 +59,19 @@ module.exports.deleteItemFromCart = async req => {
 		return false;
 	}
 }
+
+module.exports.deleteAllItems = async req => {
+	try {
+		const deleteItems = await Cart.update({ user: req.decoded.userId },
+			{ "$set": { "items": [] }});
+		console.log(deleteItem.nModified)
+		if( deleteItems.nModified === 1) return true
+		return false;
+	}
+	catch(error) {
+		return error;
+	}
+}
 module.exports.createCart = async ( req, newCart ) => {
 	try {
 		const createNewCart = await Cart.find({ user: req.decoded.userId });

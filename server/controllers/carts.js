@@ -67,13 +67,26 @@ const deleteCartItem = ( async ( req, res, next ) => {
     Cart.updateOne({ user: req.decoded.userId }, { "$pull": { "items": { "_id": req.params.id } }}, { safe: true, multi:true })
     if ( deletedItem ) {
         return res.status(200).send({
-            massage: 'הפריט הוסר בהצלחה'
+            message: 'הפריט הוסר בהצלחה'
         });
     }
     res.status(500).send({
-        massage: error
+        message: new Error
     });
 });
+
+deleteAllItems = ( async ( req, res, next ) => {
+    const deleteAll = await Cart.deleteAllItems(req);
+    console.log(deleteAll)
+    if ( deleteAll ) {
+        return res.status(200).send({
+            message: 'המוצרים נמחקו בהצלחה'
+        });
+    }
+    res.status(500).send({
+        message: req.error
+    });
+})
 
 const CartController = {
     getCart,
@@ -82,6 +95,7 @@ const CartController = {
     getCartItems,
     addCartItem,
     deleteCartItem,
+    deleteAllItems
 }
 
 module.exports = CartController;
