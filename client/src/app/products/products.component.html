@@ -1,9 +1,9 @@
 <div class="search-section">
-  <input type="text" placeholder="חפש מוצר">
+  <input type="text" placeholder="חפש מוצר" [(ngModel)]="name" #search (input)="filterProduct(search.value)">
 </div>
 <app-categories></app-categories>
 <div class="products">
-  <div class="product" *ngFor="let product of products">
+  <div class="product" *ngFor="let product of filteredProducts">
     <div class="product-image">
       <img [src]="product.image" alt="">
     </div>

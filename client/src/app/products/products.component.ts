@@ -12,6 +12,7 @@ import { NgForm } from '@angular/forms';
 })
 export class ProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
+  filteredProducts: Array<any>;
   cartItems: Array<any> = [];
   qty = 1;
   isCurrentUrl: boolean;
@@ -26,6 +27,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.productsSub = this.service.getProductUpdateListener().subscribe(
       ( products: Product[]) => {
         this.products = products;
+        this.assignCopy();
       }
     );
     const url = this.router.url;
@@ -35,6 +37,15 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.isCurrentUrl = false;
 
   }
+
+ filterProduct( value: string ) {
+    if ( !value ) {
+      return this.assignCopy();
+    }
+    this.filteredProducts = Object.assign([], this.products).filter(
+       product => product.name.toLowerCase().indexOf(value.toLowerCase()) > -1
+    );
+}
 
   getCartItems() {
     return this.cartItemsListener.asObservable();
@@ -65,4 +76,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.productsSub.unsubscribe();
     this.cartItemsSub.unsubscribe();
   }
+
+  private assignCopy() {
+    this.filteredProducts = Object.assign([], this.products);
+ }
 }
