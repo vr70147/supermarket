@@ -4,29 +4,27 @@
         <h4>עריכת מוצר נבחר</h4>
         <button (click)="flag=false"><mat-icon>add_circle_outline</mat-icon></button>
     </div>
-    <form (submit)="onSaveProduct(editForm)" #editForm="ngForm" *ngIf="!isLoading && flag">
-      <div class="editProduct adminForm" *ngFor="let product of products">
-        <mat-form-field *ngIf="!isLoading">
-          <input type="text" matInput placeholder="שם המוצר" required [ngModel]="product.name" name="name" #name="ngModel">
-        </mat-form-field>
-        <div class="img-picker">
-          <button mat-stroked-button type="button" (click)="filePicker.click()">בחר תמונה</button>
-          <input type="file" #filePicker>
-          <img [src]="product.image" alt="">
-        </div>
-        <mat-form-field *ngIf="!isLoading">
-            <input type="number" matInput placeholder="בחר/י מחיר" name="price" #price="ngModel" required [ngModel]="product.price">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-select placeholder="נא לבחור סוג יחידה">
-              <mat-option *ngFor="let select of selects" [ngModel]="select.unit" name="unit" #unit="ngModel">
-                {{ select.unit }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        <button type="submit" mat-raised-button color="primary" *ngIf="!isLoading">עדכן מוצר</button>
+    <div class="editProduct adminForm" *ngFor="let product of products">
+      <mat-form-field *ngIf="!isLoading">
+        <input type="text" matInput placeholder="שם המוצר" required [ngModel]="product.name" name="name" #name="ngModel">
+      </mat-form-field>
+      <div class="img-picker">
+        <button mat-stroked-button type="button" (click)="filePicker.click()">בחר תמונה</button>
+        <input type="file" #filePicker>
+        <img [src]="product.image" alt="">
       </div>
-    </form>
+      <mat-form-field *ngIf="!isLoading">
+          <input type="number" matInput placeholder="בחר/י מחיר" [ngModel]="product.price">
+      </mat-form-field>
+      <mat-form-field>
+          <mat-select [(ngModel)]="product.unit">
+            <mat-option *ngFor="let select of selects" [value]="select.unit">
+              {{ select.unit }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      <button (click)="onSaveProduct(product)" mat-raised-button color="primary" *ngIf="!isLoading">עדכן מוצר</button>
+    </div>
     <div class="createProduct" *ngIf="!flag">
         <p>create</p>
     </div>

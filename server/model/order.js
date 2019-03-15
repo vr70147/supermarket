@@ -36,7 +36,6 @@ module.exports.createOrder = async ( req, newOrder ) => {
 					receipt.end()
 					const deletedCart = await Cart.findOneAndDelete({ user: req.decoded.userId });
 					if( deletedCart._id ) {
-						console.log('ok');
 						return true;
 					}
 				}

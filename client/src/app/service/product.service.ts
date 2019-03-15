@@ -16,9 +16,15 @@ export class ProductService {
   private productsUpdated = new Subject<Product[]>();
   private editProduct = [];
   private editProductListener = new Subject<Product[]>();
+  private updateProductMessage: string;
+  private updateProductMessageListener = new Subject<string>();
 
 
   constructor( private http: HttpClient, private cartService: CartService ) { }
+
+  getUpdateProductMessage() {
+    return this.updateProductMessageListener.asObservable();
+  }
 
   getProductUpdateListener() {
     return this.productsUpdated.asObservable();
@@ -58,6 +64,19 @@ export class ProductService {
     this.http.put('http://localhost:3000/cart/products', productData )
     .subscribe( ( itemData: object ) => {
       this.cartService.getCartItems();
+    });
+  }
+
+  createProduct( data: Product ) {
+    this.http.post('http://localhost:3000/products', data)
+  }
+  updateProduct( data: any ) {
+    console.log(data)
+    this.http.patch('http://localhost:3000/products/' + data.id , data )
+    .subscribe( ( itemData: any ) => {
+      this.updateProductMessage = itemData.message;
+      console.log(this.updateProductMessage);
+      this.updateProductMessageListener.next(this.updateProductMessage);
     });
   }
 

@@ -4,7 +4,6 @@ const getProducts = ( async (req, res, next) => {
     try {
         const gotAllProducts = await Product.find({}).populate('category', 'name');
         if ( gotAllProducts ) {
-            console.log(gotAllProducts)
             return res.status(200).json({
                 products: gotAllProducts
             });
@@ -48,11 +47,14 @@ const updateProduct = (( req, res, next ) => {
     const update = {
         name: req.body.name,
         image: req.body.image,
-        price: req.body.price
+        price: req.body.price,
+        unit: req.body.unit
     }
     Product.findByIdAndUpdate(id, update, { new: true })
     .then(() => {
-        res.send('המוצר עודכן בהצלחה')
+        return res.status(200).json({
+            message: 'המוצר עודכן בהצלחה'
+        })
     })
     .catch((error) => {
         res.send(error);

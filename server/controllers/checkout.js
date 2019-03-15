@@ -3,7 +3,6 @@ const Order = require('../model/order');
 const sendOrder = ( async ( req, res, next ) => {
     const newOrder = new Order( req.body );
     const orderCreated = await Order.createOrder( req, newOrder );
-    console.log(orderCreated);
     if ( orderCreated ) {
         return res.status(200).json({
             message: 'תודה שקנית! נתראה בקנייה הבאה'

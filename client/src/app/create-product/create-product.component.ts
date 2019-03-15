@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from '../model/product.model';
 import { ProductService } from '../service/product.service';
-import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-create-product',
@@ -30,8 +29,15 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     );
   }
 
-  onSaveProduct( form: NgForm ) {
-    console.log(form);
+  onSaveProduct( data ) {
+    const updatedData = {
+        id: data.id,
+        name: data.name,
+        image: data.image,
+        price: data.price,
+        unit: data.unit
+    }
+    this.service.updateProduct(updatedData);
   }
 
   ngOnDestroy() {

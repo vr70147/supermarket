@@ -1,3 +1,11 @@
+input, button, mat-option {
+  font-family: 'Assistant', sans-serif;
+  text-align: center;
+}
+button {
+  font-size: 1.2vw;
+ }
+
 .title {
   display: flex;
   padding: 1.4vh 0 1.4vh 0;
@@ -32,7 +40,7 @@ mat-icon, .title button {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 }
 
@@ -45,13 +53,13 @@ mat-icon, .title button {
 }
 .adminForm input[type="text"], .adminForm input[type="number"], select, button {
   width: 100%;
-  height: 4vh;
+  height: 5vh;
 }
 
 mat-form-field {
   text-align: center;
   width: 100%;
-  margin-top: 2vh;
+  margin-top: 1vh;
 }
 
 .img-picker {
@@ -62,14 +70,9 @@ mat-form-field {
 }
 
 .img-picker img {
-  width: 100%;
+  width: 40%;
   height: auto;
 }
-
-button {
-  font-family: 'Assistant', sans-serif;
-  font-size: 1.2vw;
- }
 
 input[type="file"] {
   visibility: hidden;

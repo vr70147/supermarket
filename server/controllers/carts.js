@@ -3,8 +3,8 @@ const Cart = require('../model/cart');
 
 const getCart = ( async ( req, res, next ) => {
     try {
-        const findCart = await Cart.find({});
-        if( findCart.length > 0 ) {
+        const findCart = await Cart.findOne({ user: req.decoded.userId });
+        if( findCart ) {
             return res.send( true );
         }
         return res.send( false );
@@ -15,7 +15,6 @@ const getCart = ( async ( req, res, next ) => {
 });
 
 const createCart = ( async ( req, res, next ) => {
-    
     const newCart = new Cart({ user: req.decoded.userId });
     const createdCart = await Cart.createCart(req, newCart);
     if ( createdCart ) {
@@ -38,7 +37,6 @@ const deleteCart = (( req, res, next ) => {
 
 const getCartItems = (( req, res, next ) => {
     Cart.find({ user: req.decoded.userId }).then( cart => {
-        console.log(cart);
         if( cart[0].items != undefined) {
             res.status(200).send({
                 items: cart[0].items
@@ -50,6 +48,7 @@ const getCartItems = (( req, res, next ) => {
 const addCartItem = ( async ( req, res, next ) => {
     const id = req.body.id;
     const qty = req.body.qty;
+    
     const addItem = await Cart.addItemtoCart( req, res, id, qty );
     if ( addItem ) {
        const cart = await Cart.findOne({ user: req.decoded.userId });
@@ -64,7 +63,6 @@ const addCartItem = ( async ( req, res, next ) => {
 
 const deleteCartItem = ( async ( req, res, next ) => {
     const deletedItem = await Cart.deleteItemFromCart(req);
-    Cart.updateOne({ user: req.decoded.userId }, { "$pull": { "items": { "_id": req.params.id } }}, { safe: true, multi:true })
     if ( deletedItem ) {
         return res.status(200).send({
             message: 'הפריט הוסר בהצלחה'
@@ -77,7 +75,6 @@ const deleteCartItem = ( async ( req, res, next ) => {
 
 deleteAllItems = ( async ( req, res, next ) => {
     const deleteAll = await Cart.deleteAllItems(req);
-    console.log(deleteAll)
     if ( deleteAll ) {
         return res.status(200).send({
             message: 'המוצרים נמחקו בהצלחה'
