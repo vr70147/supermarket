@@ -67,11 +67,26 @@ export class ProductService {
     });
   }
 
-  createProduct( data: Product ) {
-    this.http.post('http://localhost:3000/products', data)
-  }
-  updateProduct( data: any ) {
+  addProduct( name: string, image: File, price: number, unit: string, category: string ) {
+    const data = {
+      name,
+      image,
+      price,
+      unit,
+      category
+    };
     console.log(data)
+    this.http.post('http://localhost:3000/products', data);
+  }
+  updateProduct( id: string, name: string, image: File, price: number, unit: string, category: string ) {
+    const data = {
+      id,
+      name,
+      image,
+      price,
+      unit,
+      category
+    };
     this.http.patch('http://localhost:3000/products/' + data.id , data )
     .subscribe( ( itemData: any ) => {
       this.updateProductMessage = itemData.message;
@@ -82,7 +97,6 @@ export class ProductService {
 
   addProductToEdit( product: object ) {
     this.editProduct = [];
-
     const obj = {};
     // tslint:disable-next-line:forin
     for ( const key in product ) {

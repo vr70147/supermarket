@@ -6,10 +6,18 @@
     <div class="image" class="innerItem image">
         <img [src]="item.image" alt="">
     </div>
-    <p class="innerItem">{{ item.name }}</p>
-    <p class="innerItem">₪{{ item.price}}</p>
-    <input type="number" [(ngModel)]="item.qty" class="innerItem">
-    <button mat-raised-button color="warn" class="innerItem" (click)="deleteCartItems(item._id)">ביטול</button>
+    <div class="innerItem">
+      <p>{{ item.name }}</p>
+    </div>
+    <div class="innerItem">
+      <p>₪{{ item.price}}</p>
+    </div>
+    <div class="innerItem qty">
+      <input type="number" [(ngModel)]="item.qty">
+    </div>
+    <div class="innerItem">
+      <button mat-raised-button color="warn" (click)="deleteCartItems(item._id)">ביטול</button>
+    </div>
   </div>
 </div>
 <div class="total">

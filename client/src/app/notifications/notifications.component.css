@@ -2,7 +2,7 @@
   display: flex;
   width: 100%;
   flex-direction: column;
-  align-content: center;
+  align-content: space-between;
   text-align: center;
 }
 
@@ -11,6 +11,8 @@
   display: inline-flex;
   align-items: center;
   flex-direction: column;
+  box-sizing: border-box;
+  height: auto;
 }
 .totalProducts {
   margin-top: 2vh;
@@ -19,9 +21,9 @@
   background-color: rgb(231, 231, 231);
 }
 .preview img {
-  height: 50%;
+  height: 75%;
   border-radius: 10px;
-  margin-top: 2vw;
+  margin: 1vw;
   border: 2px solid lightblue;
 }
 .preview h4 {

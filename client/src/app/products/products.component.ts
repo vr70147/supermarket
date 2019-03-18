@@ -71,6 +71,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     const product: Product = productValues;
     this.service.addProductToEdit(product);
   }
+
   private assignCopy() {
     this.filteredProducts = Object.assign([], this.products);
   }
