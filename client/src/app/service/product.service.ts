@@ -18,7 +18,7 @@ export class ProductService {
   private editProductListener = new Subject<Product[]>();
   private updateProductMessage: string;
   private updateProductMessageListener = new Subject<string>();
-
+  private productsCreatedListener = new Subject<boolean>();
 
   constructor( private http: HttpClient, private cartService: CartService ) { }
 
@@ -28,6 +28,9 @@ export class ProductService {
 
   getProductUpdateListener() {
     return this.productsUpdated.asObservable();
+  }
+  isProductCreatedListener() {
+    return this.productsCreatedListener.asObservable()
   }
 
   isEditProductListener() {
@@ -47,7 +50,7 @@ export class ProductService {
           id: product._id,
           name: product.name,
           image: product.image,
-          price: product.price,
+          price: JSON.parse(product.price),
           unit: product.unit,
           category: product.category
         };
@@ -55,6 +58,7 @@ export class ProductService {
     }))
     .subscribe(transformedProducts => {
       this.products = transformedProducts;
+      console.log(this.products)
       this.originalArray = transformedProducts;
       this.productsUpdated.next([...this.products]);
     });
@@ -68,15 +72,19 @@ export class ProductService {
   }
 
   addProduct( name: string, image: File, price: number, unit: string, category: string ) {
-    const data = {
-      name,
-      image,
-      price,
-      unit,
-      category
-    };
-    console.log(data)
-    this.http.post('http://localhost:3000/products', data);
+    const productData = new FormData();
+    productData.append('name', name);
+    productData.append('image', image, name);
+    productData.append('price', JSON.stringify(price));
+    productData.append('unit', unit);
+    productData.append('category', category);
+    this.http.post('http://localhost:3000/products', productData).subscribe(( product ) => {
+      if ( product ) {
+        this.getProducts();
+        this.productsCreatedListener.next(true);
+      }
+
+    });
   }
   updateProduct( id: string, name: string, image: File, price: number, unit: string, category: string ) {
     const data = {
@@ -112,6 +120,7 @@ export class ProductService {
       this.productsUpdated.next([...this.originalArray]);
       return;
     }
+    // tslint:disable-next-line:prefer-for-of
     for ( let i = 0 ; i < this.originalArray.length ; i++ ) {
       if ( this.originalArray[i].category._id === id ) {
         filteredArray.push(this.originalArray[i]);

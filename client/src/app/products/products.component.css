@@ -40,7 +40,6 @@ app-categories {
   height: auto;
   flex-flow: wrap;
   display: flex;
-  margin: 1vh;
   flex-direction: row;
   justify-content: flex-start;
   align-items: flex-start;

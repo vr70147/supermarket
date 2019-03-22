@@ -41,7 +41,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       ( category: Category[] ) => {
         this.categories = category;
       }
-    )
+    );
     this.productSub = this.service.isEditProductListener().subscribe(
       ( product: any ) => {
         this.products = {
@@ -52,7 +52,6 @@ export class CreateProductComponent implements OnInit, OnDestroy {
           unit: product.unit,
           category: product.category
         };
-
         this.form.setValue({
           id: this.products.id,
           name: this.products.name,
@@ -66,6 +65,16 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       }
     );
   }
+  onImagePicked( event: Event ) {
+    const file = ( event.target as HTMLInputElement ).files[0];
+    this.form.patchValue({ image: file });
+    this.form.get('image').updateValueAndValidity();
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.imagePreview = reader.result as string;
+    };
+    reader.readAsDataURL(file);
+  }
 
   onSaveProduct() {
    if ( this.form.invalid ) {
@@ -73,12 +82,18 @@ export class CreateProductComponent implements OnInit, OnDestroy {
    }
    this.isLoading = true;
    if ( this.mode === 'create' ) {
-     this.service.addProduct(
+      this.service.addProduct(
       this.form.value.name,
       this.form.value.image,
       this.form.value.price,
       this.form.value.unit,
       this.form.value.category );
+      this.service.isProductCreatedListener().subscribe(( response: boolean ) => {
+        if ( response ) {
+          this.imagePreview = null;
+          this.isLoading = false;
+        }
+      });
    } else {
      this.service.updateProduct(
       this.form.value.id,
@@ -90,16 +105,6 @@ export class CreateProductComponent implements OnInit, OnDestroy {
      );
    }
    this.form.reset();
-  }
-  onImagePicked( event: Event ) {
-    const file = ( event.target as HTMLInputElement ).files[0];
-    this.form.patchValue({ image: file });
-    this.form.get('image').updateValueAndValidity();
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imagePreview = reader.result as string;
-    }
-    reader.readAsDataURL(file);
   }
 
   ngOnDestroy() {

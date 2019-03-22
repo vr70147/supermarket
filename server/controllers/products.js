@@ -23,9 +23,10 @@ const addProduct = ( async ( req, res, next ) => {
         unit: req.body.unit,
         category: req.body.category
     });
+    
     const productCreated = await Product.createProduct( newProduct );
     if( productCreated ) return res.status(200).json({ message: 'המוצר נוצר בהצלחה' })
-    return res.status(500).json({ message: 'המוצר כבר קיים במערכת' });
+    return res.status(500).json({ message: new Error });
 });
 
 const deleteProduct = ( async ( req, res, next ) => {

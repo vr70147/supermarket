@@ -12,5 +12,6 @@ app-create-product {
 }
 app-products {
   width: 69vw;
+  overflow-y: scroll;
 }
 
