@@ -33,7 +33,7 @@ export class ProductService {
     return this.productsCreatedListener.asObservable()
   }
 
-  isEditProductListener() {
+  getEditProductListener() {
     return this.editProductListener.asObservable();
   }
 
@@ -58,7 +58,6 @@ export class ProductService {
     }))
     .subscribe(transformedProducts => {
       this.products = transformedProducts;
-      console.log(this.products)
       this.originalArray = transformedProducts;
       this.productsUpdated.next([...this.products]);
     });
@@ -98,7 +97,6 @@ export class ProductService {
     this.http.patch('http://localhost:3000/products/' + data.id , data )
     .subscribe( ( itemData: any ) => {
       this.updateProductMessage = itemData.message;
-      console.log(this.updateProductMessage);
       this.updateProductMessageListener.next(this.updateProductMessage);
     });
   }
@@ -111,6 +109,7 @@ export class ProductService {
       obj[key] = product[key];
     }
     this.editProduct.push(obj);
+    console.log(this.editProduct)
     this.editProductListener.next(this.editProduct);
   }
 

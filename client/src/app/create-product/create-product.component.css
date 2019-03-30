@@ -3,7 +3,7 @@ input, button, mat-option {
   text-align: center;
 }
 button {
-  font-size: 1.2vw;
+  font-family: 'Assistant', sans-serif;
  }
 
 .title {
@@ -42,6 +42,9 @@ mat-icon, .title button {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+}
+form {
+  width: 90%;
 }
 
 .adminForm {

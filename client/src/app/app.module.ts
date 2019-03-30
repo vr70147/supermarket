@@ -29,6 +29,8 @@ import { ShoppingPageComponent } from './shopping-page/shopping-page.component';
 import { AdminComponent } from './admin/admin.component';
 import { AuthInterceptor } from './auth-interceptor';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { PaymentComponent } from './payment/payment.component';
+import { ConfirmDialogComponent } from './payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,11 @@ import { CheckoutComponent } from './checkout/checkout.component';
     ShoppingPageComponent,
     AdminComponent,
     CheckoutComponent,
+    PaymentComponent,
+    ConfirmDialogComponent
+  ],
+  entryComponents: [
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -64,6 +71,9 @@ import { CheckoutComponent } from './checkout/checkout.component';
     MatProgressSpinnerModule,
     MatFormFieldModule,
     MatSelectModule
+  ],
+  exports: [
+    ConfirmDialogComponent
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]

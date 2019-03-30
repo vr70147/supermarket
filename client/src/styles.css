@@ -44,11 +44,14 @@ app-header {
   justify-content: space-between;
 }
 
-app-homepage, app-shopping-page, app-admin {
+app-homepage, app-shopping-page, app-admin, app-checkout {
   display: flex;
   flex-direction: row;
   width: 96vw;
   height: 80vh;
   justify-content: space-around;
   margin: 0 auto;
+}
+app-checkout {
+  flex-direction: row-reverse;
 }

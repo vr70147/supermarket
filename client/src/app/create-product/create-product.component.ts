@@ -17,6 +17,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
   private productSub: Subscription;
   private categorySub: Subscription;
   private mode = 'create';
+  buttonMode = 'צור מוצר חדש';
   form: FormGroup;
   imagePreview: string;
   isLoading = false;
@@ -42,26 +43,25 @@ export class CreateProductComponent implements OnInit, OnDestroy {
         this.categories = category;
       }
     );
-    this.productSub = this.service.isEditProductListener().subscribe(
+    this.productSub = this.service.getEditProductListener().subscribe(
       ( product: any ) => {
         this.products = {
-          id: product._id,
-          name: product.name,
-          image: product.image,
-          price: product.price,
-          unit: product.unit,
-          category: product.category
+          id: product[0]._id,
+          name: product[0].name,
+          image: product[0].image,
+          price: product[0].price,
+          unit: product[0].unit,
+          category: product[0].category
         };
         this.form.setValue({
-          id: this.products.id,
           name: this.products.name,
           image: this.products.image,
           price: this.products.price,
           unit: this.products.unit,
           category: this.products.category
         });
-
         this.mode = 'edit';
+        this.buttonMode = 'עדכן מוצר';
       }
     );
   }

@@ -9,6 +9,7 @@ app-create-product {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  align-items: center;
 }
 app-products {
   width: 69vw;

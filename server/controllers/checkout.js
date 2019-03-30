@@ -5,10 +5,12 @@ const sendOrder = ( async ( req, res, next ) => {
     const orderCreated = await Order.createOrder( req, newOrder );
     if ( orderCreated ) {
         return res.status(200).json({
+            status: true,
             message: 'תודה שקנית! נתראה בקנייה הבאה'
         })
     }  
     res.status(500).json({
+        status: false,
         message: 'אין עגלה פתוחה במערכת'
     });
 });

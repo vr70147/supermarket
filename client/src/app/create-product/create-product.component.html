@@ -10,13 +10,14 @@
         <input type="file" #filePicker (change)="onImagePicked($event)">
       </div>
       <div class="image-preview">
-        <img [src]="imagePreview" [alt]="form.value.title" *ngIf="imagePreview !== null && imagePreview">
+        <img [src]="imagePreview" [alt]="form.value.title" *ngIf="imagePreview !== null && imagePreview && this.form.get('image').valid">
       </div>
       <mat-form-field *ngIf="!isLoading">
           <input type="number" matInput placeholder="בחר/י מחיר" formControlName="price">
           <mat-error *ngIf="form.get('price').invalid">שדה חובה</mat-error>
       </mat-form-field>
       <mat-form-field>
+          <mat-label>בחר סוג יחידה</mat-label>
           <mat-select formControlName="unit">
             <mat-option *ngFor="let select of selects" [value]="select.unit">
               {{ select.unit }}
@@ -25,6 +26,7 @@
           <mat-error *ngIf="form.get('unit').invalid">שדה חובה</mat-error>
         </mat-form-field>
         <mat-form-field>
+          <mat-label>בחר קטגוריה</mat-label>
           <mat-select formControlName="category">
             <mat-option *ngFor="let category of categories" [value]="category.id">
               {{ category.name }}
@@ -32,6 +34,6 @@
           </mat-select>
           <mat-error *ngIf="form.get('category').invalid">שדה חובה</mat-error>
         </mat-form-field>
-      <button type="submit" mat-raised-button color="primary">עדכן מוצר</button>
+      <button type="submit" mat-raised-button color="primary">{{ buttonMode }}</button>
     </form>
 </div>

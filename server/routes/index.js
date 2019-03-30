@@ -69,6 +69,6 @@ router.delete('/cart/products', checkAuth, deleteAllItems);
 router.delete('/cart/products/:id', checkAuth, deleteCartItem);
 
 //checkout
-router.put('/order', checkAuth, sendOrder);
+router.post('/order', checkAuth, sendOrder);
 
 module.exports = router;

@@ -41,7 +41,6 @@ export class CartService {
   createNewCart( str: object ) {
     this.http.put<{ cart: Array<any> }>('http://localhost:3000/cart', str )
     .pipe( map( cartData => {
-      console.log(cartData);
       return cartData.cart.map( addedCart => {
         return {
           id: addedCart._id,
