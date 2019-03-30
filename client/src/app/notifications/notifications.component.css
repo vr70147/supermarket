@@ -1,8 +1,9 @@
 .notification {
   display: flex;
   width: 100%;
+  height: 100%;
+  justify-content: flex-start;
   flex-direction: column;
-  align-content: space-between;
   text-align: center;
 }
 
@@ -15,20 +16,20 @@
   height: auto;
 }
 .totalProducts {
-  margin-top: 2vh;
+  margin-top: 3vh;
 }
 .preview {
   background-color: rgb(231, 231, 231);
+  height: 40vh;
 }
 .preview img {
-  height: 75%;
+  height: 70%;
   border-radius: 10px;
   margin: 1vw;
   border: 2px solid lightblue;
 }
 .preview h4 {
     width: 75%;
-    margin-top: 2vh;
     line-height: 4vh;
     padding: 1vh 5vw;
     background-color: #D41216;

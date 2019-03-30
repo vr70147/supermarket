@@ -1,7 +1,17 @@
 Middlewares:
     nodejs:
-        - to add order form
+        - to add order form @done
         - to add categories @done
         - to create function that avoid from wrong product id get in to the cart @done
-        - to create upload image
+        - to create upload image @done
         - to create function that avoid from duplicated categories @done
+angular:
+        - fix the qty in products
+        - validate minimum total to redirect to checkout
+        - validate regex for credit card
+        - style the signup
+        - style the modal
+        - fix the edit product form (selects)
+        - fix the overflow in products section
+        - update the cart item after inc/dec the qty
+        - marker the searched item in the checkout cart
