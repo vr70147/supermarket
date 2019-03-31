@@ -6,7 +6,7 @@ Middlewares:
         - to create upload image @done
         - to create function that avoid from duplicated categories @done
 angular:
-        - fix the qty in products
+        - fix the qty in products @done
         - validate minimum total to redirect to checkout
         - validate regex for credit card
         - style the signup

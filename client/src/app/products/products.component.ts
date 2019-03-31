@@ -4,6 +4,7 @@ import { Product } from '../model/product.model';
 import { Subscription, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { stringify } from '@angular/core/src/util';
 
 @Component({
   selector: 'app-products',
@@ -14,7 +15,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   filteredProducts: Array<any>;
   cartItems: Array<any> = [];
-  qty = 1;
+  qty: number;
   isCurrentUrl: boolean;
   private cartItemsListener = new Subject<Array<any>>();
   private productsSub: Subscription;
@@ -36,6 +37,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
     }
     this.isCurrentUrl = false;
 
+  }
+
+  changeQty( event: Event ) {
+    this.qty = JSON.parse((event.target as HTMLInputElement).value);
   }
 
  filterProduct( value: string ) {

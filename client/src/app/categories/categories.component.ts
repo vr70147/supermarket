@@ -20,8 +20,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     this.categoriesSub = this.categoryservice.getCategoriesUpdateListener().subscribe(
       ( categories: Category[]) => {
         this.categories = categories;
-      }
-    );
+      });
   }
 
   filterProduct( id: string ) {
