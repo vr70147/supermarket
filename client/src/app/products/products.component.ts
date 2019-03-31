@@ -56,8 +56,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     return this.cartItemsListener.asObservable();
   }
 
-  addToCart( product: any, qty: number ) {
-    this.qty = qty;
+  addToCart( product: any ) {
     const productId = product.id;
     const data = {
       id: productId,

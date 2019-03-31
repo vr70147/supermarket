@@ -12,6 +12,6 @@ angular:
         - style the signup
         - style the modal
         - fix the edit product form (selects)
-        - fix the overflow in products section
+        - fix the overflow in products section @done
         - update the cart item after inc/dec the qty
         - marker the searched item in the checkout cart

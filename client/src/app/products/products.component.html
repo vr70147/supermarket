@@ -18,7 +18,7 @@
       <div class="btn-cont">
           <input type="number" class="qty" (change)="changeQty($event)" *ngIf="!isCurrentUrl" min="1" placeholder="1">
           <button mat-raised-button color="primary" (click)="addToEdit(product)" *ngIf="isCurrentUrl">עריכת מוצר</button>
-          <button mat-raised-button color="primary" (click)="addToCart(product, qty)" *ngIf="!isCurrentUrl">הוסף לעגלה</button>
+          <button mat-raised-button color="primary" (click)="addToCart(product)" *ngIf="!isCurrentUrl">הוסף לעגלה</button>
       </div>
   </div>
 </div>
