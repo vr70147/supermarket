@@ -10,27 +10,32 @@ body {
   font-family: 'Assistant', sans-serif;
 }
 h1 {
+  font-family: 'Assistant', sans-serif;
   font-size: 3.2vw;
   margin: 0;
   font-weight: 100;
 }
+
 h2 {
+  font-family: 'Assistant', sans-serif;
   font-size: 3vw;
   margin: 0;
   font-weight: 100;
 }
 h3 {
+  font-family: 'Assistant', sans-serif;
   font-size: 2.5vw;
   margin: 0;
   font-weight: 100;
 }
 h4 {
+  font-family: 'Assistant', sans-serif;
   font-size: 1.8vw;
   margin: 0;
   font-weight: 100;
 }
 p {
-  font-size: 1.1vw;
+  font-family: 'Assistant', sans-serif;
   font-weight: 100;
 }
 
@@ -55,3 +60,4 @@ app-homepage, app-shopping-page, app-admin, app-checkout {
 app-checkout {
   flex-direction: row-reverse;
 }
+

@@ -20,8 +20,9 @@ export class ConfirmDialogComponent {
 
   onNoClick(): void {
     this.dialogRef.close();
-    this.router.navigate(['/']);
     window.location.reload();
+    this.router.navigate(['/']);
+
   }
 }
 
@@ -74,7 +75,6 @@ export class PaymentComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       this.router.navigate(['/']);
       window.location.reload();
-      this.checkoutMessage = result;
     });
   }
 

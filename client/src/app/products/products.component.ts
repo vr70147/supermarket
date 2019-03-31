@@ -3,8 +3,6 @@ import { ProductService } from '../service/product.service';
 import { Product } from '../model/product.model';
 import { Subscription, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
-import { stringify } from '@angular/core/src/util';
 
 @Component({
   selector: 'app-products',
@@ -15,11 +13,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   filteredProducts: Array<any>;
   cartItems: Array<any> = [];
-  qty: number;
+  qty = false;
   isCurrentUrl: boolean;
   private cartItemsListener = new Subject<Array<any>>();
   private productsSub: Subscription;
   private cartItemsSub: Subscription;
+  tempQty: number;
+  tempId: string;
 
   constructor( private service: ProductService, private router: Router) { }
 
@@ -36,11 +36,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
       return this.isCurrentUrl = true;
     }
     this.isCurrentUrl = false;
-
   }
 
-  changeQty( event: Event ) {
-    this.qty = JSON.parse((event.target as HTMLInputElement).value);
+  changeQty( event: Event, id: string ) {
+    this.tempQty = JSON.parse((event.target as HTMLInputElement).value);
+    this.tempId = id;
   }
 
  filterProduct( value: string ) {
@@ -60,8 +60,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
     const productId = product.id;
     const data = {
       id: productId,
-      qty: this.qty
+      qty: this.tempQty
     };
+    if ( this.tempId !== productId ) {
+      return;
+    }
+    this.tempQty = 0;
     this.service.addProductToCart(data);
     this.cartItemsSub = this.service.getAddedProductInCart().subscribe(
       ( items: Array<any> ) => {

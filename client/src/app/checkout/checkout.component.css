@@ -1,7 +1,9 @@
 app-cart, app-payment {
   width: 69vw;
   margin-top: 1vw;
+  display: flex;
   height: 80vh;
+  justify-content: center;
   border: 1px solid rgb(214, 214, 214);
   border-radius: 5px;
 }
@@ -11,3 +13,4 @@ app-cart {
   flex-direction: column;
   justify-content: flex-start;
 }
+

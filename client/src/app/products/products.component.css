@@ -47,7 +47,7 @@ app-categories {
 
 .product {
   width: calc(100% / 8);
-  height: 37vh;
+  height: 30vh;
   margin: 1vh;
   border: 1px solid rgb(214, 214, 214);
   display: inline-flex;
@@ -87,7 +87,7 @@ hr {
 }
 
 .btn-cont input[type="number"] {
-  width: 2.5vw;
+  width: 2vw;
   height: 1.7vw;
 }
 .btn-cont p {

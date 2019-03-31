@@ -43,7 +43,7 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   continueToOrder() {
-    if ( this.items.length < 1 ) {
+    if ( this.total < 200 ) {
       return;
     }
     this.router.navigate(['checkout']);
