@@ -10,7 +10,7 @@ angular:
         - validate minimum total to redirect to checkout @done
         - validate regex for credit card @done
         - style the signup
-        - style the modal
+        - style the modal @done
         - fix the edit product form (selects)
         - fix the overflow in products section @done
         - update the cart item after inc/dec the qty
