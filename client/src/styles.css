@@ -61,3 +61,9 @@ app-checkout {
   flex-direction: row-reverse;
 }
 
+app-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+

@@ -7,8 +7,8 @@ Middlewares:
         - to create function that avoid from duplicated categories @done
 angular:
         - fix the qty in products @done
-        - validate minimum total to redirect to checkout
-        - validate regex for credit card
+        - validate minimum total to redirect to checkout @done
+        - validate regex for credit card @done
         - style the signup
         - style the modal
         - fix the edit product form (selects)

@@ -1,8 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CartService } from '../service/cart.service';
 import { Subscription, Subject } from 'rxjs';
-import { throwToolbarMixedModesError } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-cart',
@@ -15,7 +16,7 @@ export class CartComponent implements OnInit, OnDestroy {
   private cartSub: Subscription;
   private cartUpdatedSub: Subscription;
 
-  constructor( private service: CartService, private router: Router ) { }
+  constructor( private service: CartService, private router: Router, public dialog: MatDialog ) { }
 
    ngOnInit() {
     this.service.getCartItems();
@@ -44,13 +45,14 @@ export class CartComponent implements OnInit, OnDestroy {
 
   continueToOrder() {
     if ( this.total < 200 ) {
-      return;
+      return this.openDialog();
     }
     this.router.navigate(['checkout']);
   }
 
   getTotal() {
     const total = [];
+    // tslint:disable-next-line:prefer-for-of
     for ( let i = 0 ; i < this.items.length ; i++ ) {
       total.push( this.items[i].price * this.items[i].qty );
     }
@@ -61,6 +63,16 @@ export class CartComponent implements OnInit, OnDestroy {
       return totalNums + num;
     };
     this.total = total.reduce(getSum);
+  }
+
+  private openDialog(): void {
+    const dialogRef = this.dialog.open( ModalComponent, {
+      width: '20vw',
+      data: ['סכום ההזמנה המינימלי למשלוח הוא ₪200', 'סגור']
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
   ngOnDestroy() {

@@ -30,8 +30,8 @@ import { AdminComponent } from './admin/admin.component';
 import { AuthInterceptor } from './auth-interceptor';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { PaymentComponent } from './payment/payment.component';
-import { ConfirmDialogComponent } from './payment/payment.component';
 import { NgXCreditCardsModule } from 'ngx-credit-cards';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -50,10 +50,10 @@ import { NgXCreditCardsModule } from 'ngx-credit-cards';
     AdminComponent,
     CheckoutComponent,
     PaymentComponent,
-    ConfirmDialogComponent
+    ModalComponent
   ],
   entryComponents: [
-    ConfirmDialogComponent
+    ModalComponent
   ],
   imports: [
     BrowserModule,
@@ -75,7 +75,7 @@ import { NgXCreditCardsModule } from 'ngx-credit-cards';
     MatSelectModule
   ],
   exports: [
-    ConfirmDialogComponent
+    ModalComponent
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]

@@ -6,27 +6,7 @@ import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { CreditCardValidator } from 'ngx-credit-cards';
-
-@Injectable()
-@Component({
-  // tslint:disable-next-line:component-selector
-  selector: 'confirm-dialog',
-  templateUrl: 'confirm-dialog.component.html',
-  styleUrls: ['./payment.component.css']
-})
-export class ConfirmDialogComponent {
-
-  constructor(
-    public dialogRef: MatDialogRef<ConfirmDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: string, private router: Router) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-    window.location.reload();
-    this.router.navigate(['/']);
-
-  }
-}
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-payment',
@@ -74,9 +54,9 @@ export class PaymentComponent implements OnInit {
   }
 
   private openDialog(): void {
-    const dialogRef = this.dialog.open( ConfirmDialogComponent, {
-      width: '50vw',
-      data: this.checkoutMessage
+    const dialogRef = this.dialog.open( ModalComponent, {
+      width: '30vw',
+      data: [this.checkoutMessage, 'סגור וחזור לראשי']
     });
 
     dialogRef.afterClosed().subscribe(result => {
