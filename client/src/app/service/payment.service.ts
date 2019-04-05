@@ -8,7 +8,6 @@ import { HttpClient } from '@angular/common/http';
 export class PaymentService {
   private isCheckoutSecceedListener = new Subject<object>();
   private isValidCreditCardListener = new Subject<boolean>();
-  validCreditCard: boolean;
   constructor( private http: HttpClient) { }
 
   getCheckoutSecceedListener() {
@@ -20,21 +19,17 @@ export class PaymentService {
   }
 
   sendPayment( city: string, street: string, shippingDate: Date, creditCard: number ) {
-    this.isValidCreditCard(creditCard);
-    if ( this.validCreditCard ) {
-      const orderData = {
-        city,
-        street,
-        shippingDate,
-        creditCard
-      };
-      this.http.post<{ status: boolean, message: string }>
-      ('http://localhost:3000/order', orderData )
-      .subscribe( checkoutRes => {
-          return this.isCheckoutSecceedListener.next({ status: checkoutRes.status, message: checkoutRes.message });
-      });
-    }
-    return this.isValidCreditCardListener.next(false);
+    const orderData = {
+      city,
+      street,
+      shippingDate,
+      creditCard
+    };
+    this.http.post<{ status: boolean, message: string }>
+    ('http://localhost:3000/order', orderData )
+    .subscribe( checkoutRes => {
+        return this.isCheckoutSecceedListener.next({ status: checkoutRes.status, message: checkoutRes.message });
+    });
   }
 
   private isValidCreditCard( creditCard: number ) {
@@ -49,8 +44,8 @@ export class PaymentService {
         mastercardRegEx.test(stringifyCreditCard) ||
         amexpRegEx.test(stringifyCreditCard) ||
         discovRegEx.test(stringifyCreditCard)) {
-      return this.validCreditCard = true;
+      return true;
     }
-    return this.validCreditCard = false;
+    return false;
   }
 }

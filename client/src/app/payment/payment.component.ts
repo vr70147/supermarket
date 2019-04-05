@@ -4,6 +4,8 @@ import { PaymentService } from '../service/payment.service';
 import { Checkout } from '../model/checkout-response.model';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Subscription } from 'rxjs';
+import { CreditCardValidator } from 'ngx-credit-cards';
 
 @Injectable()
 @Component({
@@ -35,6 +37,9 @@ export class PaymentComponent implements OnInit {
   form: FormGroup;
   isLoading = false;
   checkoutMessage: string;
+  private validCreditCardSub: Subscription;
+  validCreditCard = false;
+  private checkoutListenerSub: Subscription;
 
   constructor( private service: PaymentService, private router: Router, public dialog: MatDialog) { }
 
@@ -43,7 +48,7 @@ export class PaymentComponent implements OnInit {
       city: new FormControl( null, { validators: [Validators.required, Validators.minLength(3)]}),
       street: new FormControl( null, { validators: [Validators.required, Validators.minLength(3)]}),
       shippingDate: new FormControl( null, { validators: [Validators.required]}),
-      creditCard: new FormControl( null, { validators: [Validators.required]})
+      creditCard: new FormControl( null, { validators: [Validators.required, CreditCardValidator.validateCardNumber]})
     });
   }
 
@@ -57,12 +62,14 @@ export class PaymentComponent implements OnInit {
     this.form.value.street,
     this.form.value.shippingDate,
     this.form.value.creditCard );
-    this.service.getCheckoutSecceedListener().subscribe(( response: Checkout ) => {
+
+    this.service.getCheckoutSecceedListener().subscribe(
+    ( response: Checkout ) => {
       if ( response.status ) {
         this.checkoutMessage = response.message;
         this.openDialog();
       }
-     });
+    });
     this.form.reset();
   }
 

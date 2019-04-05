@@ -31,6 +31,7 @@ import { AuthInterceptor } from './auth-interceptor';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { PaymentComponent } from './payment/payment.component';
 import { ConfirmDialogComponent } from './payment/payment.component';
+import { NgXCreditCardsModule } from 'ngx-credit-cards';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { ConfirmDialogComponent } from './payment/payment.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
+    NgXCreditCardsModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,

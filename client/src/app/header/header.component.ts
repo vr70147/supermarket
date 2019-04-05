@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       ( name: string ) => {
         this.userName = name;
       }
-    )
+    );
   }
 
   onLogout() {

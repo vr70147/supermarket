@@ -25,7 +25,7 @@ export class SignupComponent implements OnInit {
       lname: signUpForm.value.lname,
       role: 'customer'
     };
-    this.service.createUser( data )
+    this.service.createUser( data );
     signUpForm.reset();
   }
 

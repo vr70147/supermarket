@@ -114,9 +114,9 @@ export class AuthService {
       return;
     }
     return {
-      token: token,
+      token,
       expirationDate: new Date(expirationDate),
-      username: username
+      username
     }
   }
   private setAuthTimer( duration: number) {
