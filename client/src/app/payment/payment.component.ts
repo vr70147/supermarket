@@ -5,7 +5,7 @@ import { Checkout } from '../model/checkout-response.model';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Subscription } from 'rxjs';
-import { CreditCardValidator } from 'ngx-credit-cards';
+import { CreditCardValidator } from 'angular-cc-library';
 import { ModalComponent } from '../modal/modal.component';
 
 @Component({
@@ -28,7 +28,7 @@ export class PaymentComponent implements OnInit {
       city: new FormControl( null, { validators: [Validators.required, Validators.minLength(3)]}),
       street: new FormControl( null, { validators: [Validators.required, Validators.minLength(3)]}),
       shippingDate: new FormControl( null, { validators: [Validators.required]}),
-      creditCard: new FormControl( null, { validators: [Validators.required, CreditCardValidator.validateCardNumber]})
+      creditCard: new FormControl( null, { validators: [Validators.required, CreditCardValidator.validateCCNumber]})
     });
   }
 

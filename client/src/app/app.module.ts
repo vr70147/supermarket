@@ -30,7 +30,7 @@ import { AdminComponent } from './admin/admin.component';
 import { AuthInterceptor } from './auth-interceptor';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { PaymentComponent } from './payment/payment.component';
-import { NgXCreditCardsModule } from 'ngx-credit-cards';
+import { CreditCardDirectivesModule } from 'angular-cc-library';
 import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
@@ -59,7 +59,7 @@ import { ModalComponent } from './modal/modal.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    NgXCreditCardsModule,
+    CreditCardDirectivesModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,

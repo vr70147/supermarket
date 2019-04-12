@@ -14,10 +14,6 @@ export class PaymentService {
     return this.isCheckoutSecceedListener.asObservable();
   }
 
-  getValidCreditCardListener() {
-    return this.isValidCreditCardListener.asObservable();
-  }
-
   sendPayment( city: string, street: string, shippingDate: Date, creditCard: number ) {
     const orderData = {
       city,
@@ -30,22 +26,5 @@ export class PaymentService {
     .subscribe( checkoutRes => {
         return this.isCheckoutSecceedListener.next({ status: checkoutRes.status, message: checkoutRes.message });
     });
-  }
-
-  private isValidCreditCard( creditCard: number ) {
-    // Regex Types
-    const stringifyCreditCard = JSON.stringify(creditCard);
-    const visaRegEx = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/;
-    const mastercardRegEx = /^(?:5[1-5][0-9]{14})$/;
-    const amexpRegEx = /^(?:3[47][0-9]{13})$/;
-    const discovRegEx = /^(?:6(?:011|5[0-9][0-9])[0-9]{12})$/;
-
-    if (visaRegEx.test(stringifyCreditCard) ||
-        mastercardRegEx.test(stringifyCreditCard) ||
-        amexpRegEx.test(stringifyCreditCard) ||
-        discovRegEx.test(stringifyCreditCard)) {
-      return true;
-    }
-    return false;
   }
 }

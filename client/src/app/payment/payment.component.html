@@ -15,7 +15,7 @@
                 <mat-error *ngIf="form.get('shippingDate').invalid">שדה חובה</mat-error>
             </mat-form-field>
             <mat-form-field>
-                <input type="tel" matInput autocomplete="cc-number" id="cc-number" placeholder="מספר כרטיס אשראי" ccNum formControlName="creditCard">
+                <input id="cc-number" matInput type="tel" autocomplete="cc-number" placeholder="מספר כרטיס אשראי" ccNumber formControlName="creditCard">
                 <mat-error *ngIf="form.get('creditCard').invalid">מספר כרטיס שגוי</mat-error>
             </mat-form-field>
             <button type="submit" mat-raised-button color="primary">לרכישה</button>
