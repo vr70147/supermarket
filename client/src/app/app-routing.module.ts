@@ -4,6 +4,7 @@ import { HomepageComponent } from './homepage/homepage.component';
 import { ShoppingPageComponent } from './shopping-page/shopping-page.component';
 import { SignupComponent } from './signup/signup.component';
 import { AuthGuard } from './auth.guard';
+import { CartOpenGuard } from './cartopen.guard';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { AdminComponent } from './admin/admin.component';
 
@@ -12,12 +13,12 @@ const routes: Routes = [
   { path: 'shopping', component: ShoppingPageComponent, canActivate: [AuthGuard] },
   { path: 'signup', component: SignupComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
-  { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard] }
+  { path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard, CartOpenGuard] }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [AuthGuard]
+  providers: [AuthGuard, CartOpenGuard]
 })
 export class AppRoutingModule { }

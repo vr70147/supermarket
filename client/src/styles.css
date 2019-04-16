@@ -60,7 +60,13 @@ app-homepage, app-shopping-page, app-admin, app-checkout {
 app-checkout {
   flex-direction: row-reverse;
 }
-
+app-signup {
+  margin-top: 1vw;
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 app-modal {
   display: flex;
   justify-content: center;
