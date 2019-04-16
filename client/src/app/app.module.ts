@@ -32,6 +32,7 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { PaymentComponent } from './payment/payment.component';
 import { CreditCardDirectivesModule } from 'angular-cc-library';
 import { ModalComponent } from './modal/modal.component';
+import { NgHighlightModule } from 'ngx-text-highlight';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { ModalComponent } from './modal/modal.component';
     MatCardModule,
     MatProgressSpinnerModule,
     MatFormFieldModule,
-    MatSelectModule
+    MatSelectModule,
+    NgHighlightModule
   ],
   exports: [
     ModalComponent

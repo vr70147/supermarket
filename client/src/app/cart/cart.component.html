@@ -2,7 +2,10 @@
   <h4>העגלה שלי</h4>
 </div>
 <div class="cart">
-  <div class="item" *ngFor="let item of items">
+  <div class="search ng-pristine ng-valid ng-touched" *ngIf="mode === 'checkout'">
+    <input type="text" placeholder="חפש מילה" ngxTextHighlight>
+  </div>
+  <div class="item" *ngFor="let item of items" ngxTextHighlight [caseSensitive]="true">
     <div class="image" class="innerItem image">
         <img [src]="item.image" alt="">
     </div>
@@ -21,8 +24,8 @@
   </div>
 </div>
 <div class="total">
-  <button mat-raised-button color="primary" class="innerItem" (click)="continueToOrder()">סיום קניה</button>
-  <button mat-raised-button color="warn" class="innerItem" (click)="deleteAllCartItems()">מחיקת כל המוצרים</button>
+  <button mat-raised-button color="primary" class="innerItem" *ngIf="mode === 'shopping'" (click)="continueToOrder()">סיום קניה</button>
+  <button mat-raised-button color="warn" class="innerItem" *ngIf="mode === 'shopping'" (click)="deleteAllCartItems()">מחיקת כל המוצרים</button>
   <div class="totalText">
       <h4>סה"כ לתשלום:</h4>
       <h4>₪{{ total }}</h4>
