@@ -12,13 +12,13 @@
       <div class="image-preview">
         <img [src]="imagePreview" [alt]="form.value.title" *ngIf="imagePreview !== null && imagePreview && this.form.get('image').valid">
       </div>
-      <mat-form-field *ngIf="!isLoading">
+      <mat-form-field>
           <input type="number" matInput placeholder="בחר/י מחיר" formControlName="price">
           <mat-error *ngIf="form.get('price').invalid">שדה חובה</mat-error>
       </mat-form-field>
       <mat-form-field>
-          <mat-label>בחר סוג יחידה</mat-label>
-          <mat-select formControlName="unit">
+          <mat-label >בחר סוג יחידה</mat-label>
+          <mat-select [(value)]="units">
             <mat-option *ngFor="let select of selects" [value]="select.unit">
               {{ select.unit }}
             </mat-option>
@@ -27,7 +27,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>בחר קטגוריה</mat-label>
-          <mat-select formControlName="category">
+          <mat-select [(value)]="selectedCategory">
             <mat-option *ngFor="let category of categories" [value]="category.id">
               {{ category.name }}
             </mat-option>

@@ -14,6 +14,8 @@ import { Category } from '../model/category.model';
 })
 export class CreateProductComponent implements OnInit, OnDestroy {
   products: Product;
+  units: string;
+  selectedCategory: string;
   private productSub: Subscription;
   private categorySub: Subscription;
   private mode = 'create';
@@ -58,8 +60,11 @@ export class CreateProductComponent implements OnInit, OnDestroy {
           image: this.products.image,
           price: this.products.price,
           unit: this.products.unit,
-          category: this.products.category
+          category: this.products.category.name
         });
+        this.selectedCategory = this.products.category.name;
+        this.units = this.products.unit;
+        console.log(this.selectedCategory)
         this.mode = 'edit';
         this.buttonMode = 'עדכן מוצר';
       }
