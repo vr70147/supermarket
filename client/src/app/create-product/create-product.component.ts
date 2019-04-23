@@ -14,12 +14,13 @@ import { Category } from '../model/category.model';
 })
 export class CreateProductComponent implements OnInit, OnDestroy {
   products: Product;
-  units: string;
+  selectedUnit: string;
   selectedCategory: string;
   private productSub: Subscription;
   private categorySub: Subscription;
   private mode = 'create';
   buttonMode = 'צור מוצר חדש';
+  isString = false;
   form: FormGroup;
   imagePreview: string;
   isLoading = false;
@@ -62,9 +63,12 @@ export class CreateProductComponent implements OnInit, OnDestroy {
           unit: this.products.unit,
           category: this.products.category.name
         });
+        this.imagePreview = this.products.image;
+        if ( this.imagePreview.length > 0 ) {
+          this.isString = true;
+        }
         this.selectedCategory = this.products.category.name;
-        this.units = this.products.unit;
-        console.log(this.selectedCategory)
+        this.selectedUnit = this.products.unit;
         this.mode = 'edit';
         this.buttonMode = 'עדכן מוצר';
       }

@@ -33,11 +33,14 @@ export const mimeType = (
         }
         if (isValid) {
           observer.next(null);
-        } else {
+        }  else {
           observer.next({ invalidMimeType: true });
         }
         observer.complete();
       });
+      if ( typeof(control.value) === 'string' ) {
+        return;
+      }
       fileReader.readAsArrayBuffer(file);
     }
   );

@@ -10,7 +10,7 @@
         <input type="file" #filePicker (change)="onImagePicked($event)">
       </div>
       <div class="image-preview">
-        <img [src]="imagePreview" [alt]="form.value.title" *ngIf="imagePreview !== null && imagePreview && this.form.get('image').valid">
+        <img [src]="imagePreview" [alt]="form.value.title" *ngIf="imagePreview !== null && imagePreview && this.form.get('image').valid || isString">
       </div>
       <mat-form-field>
           <input type="number" matInput placeholder="בחר/י מחיר" formControlName="price">
@@ -18,7 +18,7 @@
       </mat-form-field>
       <mat-form-field>
           <mat-label >בחר סוג יחידה</mat-label>
-          <mat-select [(value)]="units">
+          <mat-select [(value)]="selectedUnit">
             <mat-option *ngFor="let select of selects" [value]="select.unit">
               {{ select.unit }}
             </mat-option>
