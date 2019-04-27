@@ -7,6 +7,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const async = require('async');
+const cloudinary = require('cloudinary');
 
 // Database connection
 mongoose.set('useCreateIndex', true);
@@ -14,6 +15,13 @@ mongoose.connect('mongodb+srv://hotsource:fvXs8b46pzx5YpL@hotsource-fmxxz.mongod
 , { useNewUrlParser: true })
 .then(() => { console.log('SERVER UP')})
 .catch((e) => { console.log(e)});
+
+// define Cloudinary
+cloudinary.config({ 
+  cloud_name: 'supermarketapp', 
+  api_key: '784319497175699', 
+  api_secret: '_zTQ2GSn3mb--OMytCzS0GujV70' 
+});
 
 // initialize middlewares
 app.use(bodyParser.urlencoded({ extended: false }));

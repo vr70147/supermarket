@@ -1,4 +1,6 @@
 const Product = require('../model/product');
+const Upload = require('../cloud/cloud');
+const fs = require('fs');
 
 const getProducts = ( async (req, res, next) => {
     try {
@@ -15,17 +17,21 @@ const getProducts = ( async (req, res, next) => {
 });
 
 const addProduct = ( async ( req, res, next ) => {
-    const url = req.protocol + '://' + req.get('host');
+    const upload = await Upload.uploadImage(req.file.filename);
+    console.log(upload)
     const newProduct = new Product({
         name: req.body.name,
-        image: url + '/images/' + req.file.filename,
+        image: upload.secure_url,
         price: req.body.price,
         unit: req.body.unit,
         category: req.body.category
     });
-    
+
     const productCreated = await Product.createProduct( newProduct );
-    if( productCreated ) return res.status(200).json({ message: 'המוצר נוצר בהצלחה' })
+    fs.unlinkSync(`./images/${req.file.filename}`)
+    if( productCreated ){
+        return res.status(200).json({ message: 'המוצר נוצר בהצלחה' })
+    }
     return res.status(500).json({ message: new Error });
 });
 
@@ -42,11 +48,13 @@ const deleteProduct = ( async ( req, res, next ) => {
     });
 });
 
-const updateProduct = (( req, res, next ) => {
+const updateProduct = async( req, res, next ) => {
+    console.log(req.file);
+    const upload = await Upload.uploadImage(req.file.filename);
     const id = req.params.id;
     const update = {
         name: req.body.name,
-        image: req.body.image,
+        image: upload.secure_url,
         price: req.body.price,
         unit: req.body.unit,
         category: req.body.category
@@ -60,7 +68,7 @@ const updateProduct = (( req, res, next ) => {
     .catch((error) => {
         res.send(error);
     })
-});
+};
 
 const ProductsController = {
     getProducts,

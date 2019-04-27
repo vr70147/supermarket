@@ -97,7 +97,6 @@ export class ProductService {
     };
     this.http.patch('http://localhost:3000/products/' + data.id , data )
     .subscribe( ( itemData: any ) => {
-      console.log(itemData);
       this.updateProductMessage = itemData.message;
       this.updateProductMessageListener.next(this.updateProductMessage);
     });

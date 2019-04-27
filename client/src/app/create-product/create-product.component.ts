@@ -42,7 +42,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       image: new FormControl(null, {validators: [Validators.required], asyncValidators: [ mimeType ]}),
       price: new FormControl( null, { validators: [Validators.required]}),
       unit: new FormControl( null, { validators: [Validators.required]}),
-      category: new FormControl( null, { validators: [Validators.required]})
+      category: new FormControl( null, { validators: [Validators.required] })
   });
     this.categorySub = this.categoryService.getCategoriesUpdateListener().subscribe(
       ( category: Category[] ) => {
@@ -79,12 +79,13 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       this.imagePreview = reader.result as string;
     };
     reader.readAsDataURL(file);
-    document.getElementById('imagePreview').style.display = 'block';
+    if ( this.element !== undefined ) {
+      this.element.style.display = 'block';
+    }
   }
 
   onSaveProduct() {
-   console.log(this.form);
-   if ( this.form.invalid ) {
+   if ( this.form.invalid && this.selectedCategory === undefined && this.selectedUnit === undefined ) {
      return;
    }
    this.isLoading = true;
@@ -93,8 +94,8 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       this.form.value.name,
       this.form.value.image,
       this.form.value.price,
-      this.form.value.unit,
-      this.form.value.category );
+      this.selectedUnit,
+      this.selectedCategory );
       this.service.isProductCreatedListener().subscribe(( response: boolean ) => {
         if ( response ) {
           this.imagePreview = null;
@@ -111,8 +112,10 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       this.selectedCategory
      );
     this.openDialog();
-   }
+  }
    this.form.reset();
+   this.selectedCategory = '';
+   this.selectedUnit = '';
   }
 
   updateSelectedCategory( id: string ) {

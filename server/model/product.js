@@ -12,7 +12,6 @@ const ProductSchema = new Schema({
 const Product = module.exports = mongoose.model('products', ProductSchema);
 module.exports.createProduct = async (newProduct) => {
 	try {
-		console.log(newProduct);
 		const product = await newProduct.save();
 		if (product) return true
 		return false;
