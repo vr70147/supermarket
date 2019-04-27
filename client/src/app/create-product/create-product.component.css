@@ -57,6 +57,7 @@ form {
 .adminForm input[type="text"], .adminForm input[type="number"], select, button {
   width: 100%;
   height: 5vh;
+  font-family: 'Assistant', sans-serif;
 }
 
 mat-form-field {
@@ -89,5 +90,9 @@ mat-form-field {
 input[type="file"] {
   visibility: hidden;
   width: 1px;
+  font-family: 'Assistant', sans-serif;
+}
+
+mat-form-field {
   font-family: 'Assistant', sans-serif;
 }

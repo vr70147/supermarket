@@ -18,6 +18,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
   productId: string;
   selectedUnit: string;
   selectedCategory: string;
+  element: HTMLElement;
   private productSub: Subscription;
   private categorySub: Subscription;
   mode = 'create';
@@ -70,8 +71,6 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     );
   }
   onImagePicked( event: Event ) {
-    const element = document.getElementById('imagePreview');
-    this.service.toggleImagePreview(element);
     const file = ( event.target as HTMLInputElement ).files[0];
     this.form.patchValue({ image: file });
     this.form.get('image').updateValueAndValidity();
@@ -80,9 +79,11 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       this.imagePreview = reader.result as string;
     };
     reader.readAsDataURL(file);
+    document.getElementById('imagePreview').style.display = 'block';
   }
 
   onSaveProduct() {
+   console.log(this.form);
    if ( this.form.invalid ) {
      return;
    }
@@ -109,7 +110,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       this.selectedUnit,
       this.selectedCategory
      );
-     this.openDialog();
+    this.openDialog();
    }
    this.form.reset();
   }
@@ -125,8 +126,8 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     this.form.reset();
     this.selectedCategory = '';
     this.selectedUnit = '';
-    const element = document.getElementById('imagePreview');
-    this.service.toggleImagePreview(element);
+    this.element = document.getElementById('imagePreview');
+    this.element.style.display = this.service.toggleImagePreview(this.element);
   }
   private openDialog(): void {
     const dialogRef = this.dialog.open( ModalComponent, {

@@ -132,6 +132,6 @@ export class ProductService {
   }
 
   toggleImagePreview(element: HTMLElement) {
-    element.style.display = element.style.display === 'none' ? 'block' : 'none';
+    return element.style.display = element.style.display === 'none' || element === undefined  ? 'block' : 'none';
   }
 }
