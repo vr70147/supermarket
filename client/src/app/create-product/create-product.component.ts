@@ -6,6 +6,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { mimeType } from './mime-type.validator';
 import { CategoryService } from '../service/category.service';
 import { Category } from '../model/category.model';
+import { MatDialog } from '@angular/material';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-create-product',
@@ -13,12 +15,12 @@ import { Category } from '../model/category.model';
   styleUrls: ['./create-product.component.css']
 })
 export class CreateProductComponent implements OnInit, OnDestroy {
-  products: Product;
+  productId: string;
   selectedUnit: string;
   selectedCategory: string;
   private productSub: Subscription;
   private categorySub: Subscription;
-  private mode = 'create';
+  mode = 'create';
   buttonMode = 'צור מוצר חדש';
   isString = false;
   form: FormGroup;
@@ -31,7 +33,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
   ];
   categories: Category[] = [];
 
-  constructor( private service: ProductService, private categoryService: CategoryService ) { }
+  constructor( private service: ProductService, private categoryService: CategoryService, public dialog: MatDialog ) { }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -48,33 +50,28 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     );
     this.productSub = this.service.getEditProductListener().subscribe(
       ( product: any ) => {
-        this.products = {
-          id: product[0]._id,
+        this.selectedCategory = product[0].category._id;
+        this.selectedUnit = product[0].unit;
+        this.form.setValue({
           name: product[0].name,
           image: product[0].image,
           price: product[0].price,
-          unit: product[0].unit,
-          category: product[0].category
-        };
-        this.form.setValue({
-          name: this.products.name,
-          image: this.products.image,
-          price: this.products.price,
-          unit: this.products.unit,
-          category: this.products.category.name
+          unit: this.selectedUnit,
+          category: this.selectedCategory
         });
-        this.imagePreview = this.products.image;
+        this.imagePreview = product[0].image;
         if ( this.imagePreview.length > 0 ) {
           this.isString = true;
         }
-        this.selectedCategory = this.products.category.name;
-        this.selectedUnit = this.products.unit;
+        this.productId = product[0].id;
         this.mode = 'edit';
         this.buttonMode = 'עדכן מוצר';
       }
     );
   }
   onImagePicked( event: Event ) {
+    const element = document.getElementById('imagePreview');
+    this.service.toggleImagePreview(element);
     const file = ( event.target as HTMLInputElement ).files[0];
     this.form.patchValue({ image: file });
     this.form.get('image').updateValueAndValidity();
@@ -104,18 +101,43 @@ export class CreateProductComponent implements OnInit, OnDestroy {
         }
       });
    } else {
-     this.service.updateProduct(
-      this.form.value.id,
+    this.service.updateProduct(
+      this.productId,
       this.form.value.name,
       this.form.value.image,
       this.form.value.price,
-      this.form.value.unit,
-      this.form.value.category
+      this.selectedUnit,
+      this.selectedCategory
      );
+     this.openDialog();
    }
    this.form.reset();
   }
 
+  updateSelectedCategory( id: string ) {
+    this.selectedCategory = id;
+  }
+  updateSelectedUnit( unit: string ) {
+    this.selectedUnit = unit;
+  }
+  changeToNewProduct() {
+    this.mode = 'create';
+    this.form.reset();
+    this.selectedCategory = '';
+    this.selectedUnit = '';
+    const element = document.getElementById('imagePreview');
+    this.service.toggleImagePreview(element);
+  }
+  private openDialog(): void {
+    const dialogRef = this.dialog.open( ModalComponent, {
+      width: '20vw',
+      data: ['המוצר עודכן בהצלחה', 'סגור']
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      window.location.reload();
+    });
+  }
   ngOnDestroy() {
     this.productSub.unsubscribe();
   }

@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Product } from '../model/product.model';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { CartService } from './cart.service';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class ProductService {
   private updateProductMessageListener = new Subject<string>();
   private productsCreatedListener = new Subject<boolean>();
 
-  constructor( private http: HttpClient, private cartService: CartService ) { }
+  constructor( private http: HttpClient, private cartService: CartService, @Inject(DOCUMENT) private document: any ) { }
 
   getUpdateProductMessage() {
     return this.updateProductMessageListener.asObservable();
@@ -30,7 +31,7 @@ export class ProductService {
     return this.productsUpdated.asObservable();
   }
   isProductCreatedListener() {
-    return this.productsCreatedListener.asObservable()
+    return this.productsCreatedListener.asObservable();
   }
 
   getEditProductListener() {
@@ -85,7 +86,7 @@ export class ProductService {
 
     });
   }
-  updateProduct( id: string, name: string, image: File, price: number, unit: string, category: string ) {
+  updateProduct( id: string, name: string, image: any, price: number, unit: string, category: string ) {
     const data = {
       id,
       name,
@@ -96,6 +97,7 @@ export class ProductService {
     };
     this.http.patch('http://localhost:3000/products/' + data.id , data )
     .subscribe( ( itemData: any ) => {
+      console.log(itemData);
       this.updateProductMessage = itemData.message;
       this.updateProductMessageListener.next(this.updateProductMessage);
     });
@@ -109,7 +111,6 @@ export class ProductService {
       obj[key] = product[key];
     }
     this.editProduct.push(obj);
-    console.log(this.editProduct)
     this.editProductListener.next(this.editProduct);
   }
 
@@ -130,7 +131,7 @@ export class ProductService {
 
   }
 
-
-
-
+  toggleImagePreview(element: HTMLElement) {
+    element.style.display = element.style.display === 'none' ? 'block' : 'none';
+  }
 }

@@ -73,12 +73,12 @@ mat-form-field {
 }
 
 .image-preview {
-  width: 12vw;
+  width: auto;
   height: auto;
 }
 
 .image-preview img {
-  width: 100%;
+  height: 12vh;
 }
 
 .img-picker img {

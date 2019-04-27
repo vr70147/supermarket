@@ -40,7 +40,6 @@ const deleteProduct = ( async ( req, res, next ) => {
     return res.status(500).json({
         message: 'המוצר לא קיים במערכת'
     });
-
 });
 
 const updateProduct = (( req, res, next ) => {
@@ -49,7 +48,8 @@ const updateProduct = (( req, res, next ) => {
         name: req.body.name,
         image: req.body.image,
         price: req.body.price,
-        unit: req.body.unit
+        unit: req.body.unit,
+        category: req.body.category
     }
     Product.findByIdAndUpdate(id, update, { new: true })
     .then(() => {
