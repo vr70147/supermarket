@@ -11,7 +11,7 @@ angular:
         - validate regex for credit card @done
         - style the signup @done
         - style the modal @done
-        - fix the edit product form (selects)
+        - fix the edit product form (selects) @done
         - fix the overflow in products section @done
         - update the cart item after inc/dec the qty
         - marker the searched item in the checkout cart

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../service/auth.service';
 import { CartService } from '../service/cart.service';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSub: Subscription;
   private cartListenerSub: Subscription;
@@ -68,5 +68,10 @@ export class LoginComponent implements OnInit {
   }
   continueShopping() {
     this.router.navigate(['/shopping']);
+  }
+
+  ngOnDestroy() {
+    this.authListenerSub.unsubscribe();
+    this.cartListenerSub.unsubscribe();
   }
 }

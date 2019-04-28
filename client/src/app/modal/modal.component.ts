@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Subscription } from 'rxjs';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Injectable()
 @Component({
@@ -10,7 +9,6 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./modal.component.css']
 })
 export class ModalComponent implements OnInit {
-  private content: Subscription;
 
   constructor(
     public dialogRef: MatDialogRef<ModalComponent>,

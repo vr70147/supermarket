@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from '../model/product.model';
 import { ProductService } from '../service/product.service';
@@ -8,7 +8,7 @@ import { ProductService } from '../service/product.service';
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.css']
 })
-export class NotificationsComponent implements OnInit {
+export class NotificationsComponent implements OnInit, OnDestroy {
   products: Product[] = [];
   random: Array<any> = [];
   randomStatus = false;
@@ -31,5 +31,9 @@ export class NotificationsComponent implements OnInit {
         this.randomStatus = true;
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.productSub.unsubscribe();
   }
 }

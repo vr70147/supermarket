@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Injectable } from '@angular/core';
+import { Component, OnInit, Inject, Injectable, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PaymentService } from '../service/payment.service';
 import { Checkout } from '../model/checkout-response.model';
@@ -13,7 +13,7 @@ import { ModalComponent } from '../modal/modal.component';
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.css']
 })
-export class PaymentComponent implements OnInit {
+export class PaymentComponent implements OnInit, OnDestroy {
   form: FormGroup;
   isLoading = false;
   checkoutMessage: string;
@@ -43,7 +43,7 @@ export class PaymentComponent implements OnInit {
     this.form.value.shippingDate,
     this.form.value.creditCard );
 
-    this.service.getCheckoutSecceedListener().subscribe(
+    this.checkoutListenerSub = this.service.getCheckoutSecceedListener().subscribe(
     ( response: Checkout ) => {
       if ( response.status ) {
         this.checkoutMessage = response.message;
@@ -65,5 +65,8 @@ export class PaymentComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+    this.checkoutListenerSub.unsubscribe();
+  }
 }
 

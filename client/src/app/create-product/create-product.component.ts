@@ -71,6 +71,8 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     );
   }
   onImagePicked( event: Event ) {
+    // Get image file and display it in the DOM
+
     const file = ( event.target as HTMLInputElement ).files[0];
     this.form.patchValue({ image: file });
     this.form.get('image').updateValueAndValidity();
@@ -85,6 +87,8 @@ export class CreateProductComponent implements OnInit, OnDestroy {
   }
 
   onSaveProduct() {
+    // Send request to server to create new product or edit one
+
    if ( this.form.invalid && this.selectedCategory === undefined && this.selectedUnit === undefined ) {
      return;
    }
@@ -144,5 +148,6 @@ export class CreateProductComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.productSub.unsubscribe();
+    this.categorySub.unsubscribe();
   }
 }

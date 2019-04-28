@@ -15,7 +15,6 @@ export class CartComponent implements OnInit, OnDestroy {
   total = 0;
   mode = 'shopping';
   private cartSub: Subscription;
-  private cartUpdatedSub: Subscription;
 
   constructor( private service: CartService, private router: Router, public dialog: MatDialog ) { }
 
@@ -23,7 +22,6 @@ export class CartComponent implements OnInit, OnDestroy {
     if ( this.router.url === '/checkout') {
       this.mode = 'checkout';
     }
-    console.log(this.mode);
     this.service.getCartItems();
     this.cartSub = this.service.getCartItemsListener().subscribe(
       ( async ( items: object ) => {
