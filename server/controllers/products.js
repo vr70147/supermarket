@@ -69,9 +69,11 @@ const updateProduct = async( req, res, next ) => {
             category: req.body.category
         }
     }
-    console.log(update);
     Product.update({_id : id }, update, { new: true })
     .then(() => {
+        if ( req.file === undefined ) {
+            fs.unlinkSync(`./images/${req.file.filename}`);
+        }
         return res.status(200).json({
             message: 'המוצר עודכן בהצלחה'
         })
