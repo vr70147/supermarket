@@ -87,15 +87,18 @@ export class ProductService {
     });
   }
   updateProduct( id: string, name: string, image: any, price: number, unit: string, category: string ) {
-    const data = {
-      id,
-      name,
-      image,
-      price,
-      unit,
-      category
-    };
-    this.http.patch('http://localhost:3000/products/' + data.id , data )
+    console.log(image);
+    const productUpdateData = new FormData();
+    productUpdateData.append('name', name);
+    if ( typeof(image) === 'object' ) {
+      productUpdateData.append('image', image, name);
+    } else {
+      productUpdateData.append('image', image);
+    }
+    productUpdateData.append('price', JSON.stringify(price));
+    productUpdateData.append('unit', unit);
+    productUpdateData.append('category', category);
+    this.http.patch('http://localhost:3000/products/' + id , productUpdateData )
     .subscribe( ( itemData: any ) => {
       this.updateProductMessage = itemData.message;
       this.updateProductMessageListener.next(this.updateProductMessage);

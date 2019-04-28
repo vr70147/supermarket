@@ -20,12 +20,12 @@ const storage = multer.diskStorage({
     destination: ( req, file, cb ) => {
         const isValid = MIME_TYPE_MAP[file.mimetype];
         let error = new Error('Invalid mime type');
-        if(isValid) {
+        if( isValid ) {
             error = null;
         }
         cb( error, 'images');
     },
-    filename: (req, file, cb ) => {
+    filename: ( req, file, cb ) => {
         const name = file.originalname.toLowerCase().split( ' ' ).join( '-' );
         const ext = MIME_TYPE_MAP[file.mimetype];
         cb( null, name + '-' + Date.now() + '.' + ext);
@@ -57,7 +57,7 @@ router.put('/categories', checkAuth, addCategory);
 router.get('/products', getProducts);
 router.post('/products', multer({ storage: storage }).single('image'), checkAuth, addProduct);
 router.delete('/products/:id', checkAuth, deleteProduct);
-router.patch('/products/:id', checkAuth, updateProduct);
+router.patch('/products/:id', multer({ storage: storage }).single('image'), checkAuth, updateProduct);
 
 //Cart routes
 router.get('/cart', checkAuth, getCart);

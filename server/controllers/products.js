@@ -18,7 +18,6 @@ const getProducts = ( async (req, res, next) => {
 
 const addProduct = ( async ( req, res, next ) => {
     const upload = await Upload.uploadImage(req.file.filename);
-    console.log(upload)
     const newProduct = new Product({
         name: req.body.name,
         image: upload.secure_url,
@@ -28,7 +27,7 @@ const addProduct = ( async ( req, res, next ) => {
     });
 
     const productCreated = await Product.createProduct( newProduct );
-    fs.unlinkSync(`./images/${req.file.filename}`)
+    fs.unlinkSync(`./images/${req.file.filename}`);
     if( productCreated ){
         return res.status(200).json({ message: 'המוצר נוצר בהצלחה' })
     }
@@ -49,17 +48,29 @@ const deleteProduct = ( async ( req, res, next ) => {
 });
 
 const updateProduct = async( req, res, next ) => {
-    console.log(req.file);
-    const upload = await Upload.uploadImage(req.file.filename);
+    let update;
     const id = req.params.id;
-    const update = {
-        name: req.body.name,
-        image: upload.secure_url,
-        price: req.body.price,
-        unit: req.body.unit,
-        category: req.body.category
+    if( req.file === undefined ) {
+        update = {
+            name: req.body.name,
+            image: req.body.image,
+            price: req.body.price,
+            unit: req.body.unit,
+            category: req.body.category
+        }
     }
-    Product.findByIdAndUpdate(id, update, { new: true })
+    else {
+        const upload = await Upload.uploadImage(req.file.filename);
+        update = {
+            name: req.body.name,
+            image: upload.secure_url,
+            price: req.body.price,
+            unit: req.body.unit,
+            category: req.body.category
+        }
+    }
+    console.log(update);
+    Product.update({_id : id }, update, { new: true })
     .then(() => {
         return res.status(200).json({
             message: 'המוצר עודכן בהצלחה'
