@@ -4,19 +4,48 @@ import { Subscription, Subject } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ModalComponent } from '../modal/modal.component';
+import { Pipe, PipeTransform } from '@angular/core';
+import {BrowserModule, DomSanitizer} from '@angular/platform-browser';
 
+@Pipe({
+  name: 'highlight'
+})
+export class HighlightSearch implements PipeTransform {
+constructor(private sanitizer: DomSanitizer) {}
+
+  transform(textValue: any, args: any): any {
+    if (!args) {
+      return textValue;
+    }
+    // Match in a case insensitive maneer
+    const re = new RegExp(args, 'gi');
+    const match = textValue.match(re);
+
+    // If there's no match, just return the original value.
+    if (!match) {
+      return textValue;
+    }
+
+    // const value = textValue.replace(re, '<mark>' + match[0] + '</mark>');
+    const value =  args ? textValue.replace(new RegExp(args, 'i'), `<mark>${args}</mark>`) : textValue;
+    return this.sanitizer.bypassSecurityTrustHtml(value);
+  }
+}
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
+
 export class CartComponent implements OnInit, OnDestroy {
   items: Array<any> = [];
   total = 0;
   mode = 'shopping';
   private cartSub: Subscription;
+  results: string[];
+  searchTerm: string;
 
-  constructor( private service: CartService, private router: Router, public dialog: MatDialog ) { }
+  constructor( private service: CartService, private router: Router, public dialog: MatDialog, private sanitizer: DomSanitizer ) { }
 
    ngOnInit() {
     if ( this.router.url === '/checkout') {
@@ -32,6 +61,9 @@ export class CartComponent implements OnInit, OnDestroy {
         await this.getTotal();
       })
     );
+  }
+  updateSearch(e: any) {
+    this.searchTerm = e.target.value;
   }
 
   getItems() {

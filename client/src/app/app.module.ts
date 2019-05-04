@@ -33,6 +33,7 @@ import { PaymentComponent } from './payment/payment.component';
 import { CreditCardDirectivesModule } from 'angular-cc-library';
 import { ModalComponent } from './modal/modal.component';
 import { NgHighlightModule } from 'ngx-text-highlight';
+import { HighlightSearch } from './cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { NgHighlightModule } from 'ngx-text-highlight';
     AdminComponent,
     CheckoutComponent,
     PaymentComponent,
-    ModalComponent
+    ModalComponent,
+    HighlightSearch
   ],
   entryComponents: [
     ModalComponent

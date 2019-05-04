@@ -24,7 +24,7 @@
 }
 .item {
   width: 100%;
-  height: 10vh;
+  height: 7vh;
   display: inline-flex;
   flex-direction: row;
   align-items: center;
@@ -33,9 +33,6 @@
 .innerItem{
   width: 5vw;
   text-align: center;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
 }
 .qty {
   width: 2vw;
@@ -44,7 +41,7 @@
   width: 100%;
 }
 .image {
-  height: 100%;
+  height: 90%;
 }
 
 .item img {

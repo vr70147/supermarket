@@ -2,14 +2,14 @@
   <h4>העגלה שלי</h4>
 </div>
 <div class="cart">
-  <div class="search ng-pristine ng-valid ng-touched" *ngIf="mode === 'checkout'">
-    <input type="text" placeholder="חפש מילה" ngxTextHighlight>
+  <div class="search" *ngIf="mode === 'checkout'">
+    <input type="text" placeholder="חפש מילה" (keyup)="updateSearch($event)">
   </div>
-  <div class="item" *ngFor="let item of items" ngxTextHighlight [caseSensitive]="true">
+  <div class="item" *ngFor="let item of items">
     <div class="image" class="innerItem image">
         <img [src]="item.image" alt="">
     </div>
-    <div class="innerItem">
+    <div class="innerItem" [innerHTML]="item.name | highlight: searchTerm">
       <p>{{ item.name }}</p>
     </div>
     <div class="innerItem">
